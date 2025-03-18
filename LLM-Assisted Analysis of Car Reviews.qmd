@@ -1,0 +1,228 @@
+---
+title: "LLM-Assisted Analysis of Open-Ended Text"
+subtitle: "Consumer Car Reviews from Edmunds.com"
+format: html
+editor: source
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+text analysis has long been a complicated and not always super insightful exercise. not anymore. now it's vastly more powerful, insightful, and accessible. 
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed). Does this work?
+
+
+Does this work?
+
+```{r setup}
+#| include: false 
+
+library(tidyverse)
+library(haven)
+library(readr)
+library(RColorBrewer)
+library(ggplot2)
+library(dplyr)
+library(readxl)
+library(hrbrthemes)
+
+
+#library(reticulate)
+#use_python("C:\\Users\\benja\\anaconda3")
+
+
+```
+
+
+```{r insheet}
+
+df_dodge <- read_csv("data\\Scraped_Car_Review_dodge.csv", show_col_types = FALSE) |> mutate(make = "Dodge") 
+glimpse(df_dodge)
+
+df_ford <- read_csv("data\\Scraped_Car_Review_ford.csv", show_col_types = FALSE) |> mutate(make = "Ford") 
+glimpse(df_ford)
+
+df_toyota <- read_csv("data\\Scrapped_Car_Reviews_Toyota.csv", show_col_types = FALSE) |> mutate(make = "Toyota") 
+glimpse(df_toyota)
+
+
+
+
+df <- bind_rows(df_dodge, df_ford, df_toyota)
+
+
+# remove leading words & spaces from date variable
+
+df <- df %>%
+  mutate(Review_Date = str_replace_all(Review_Date, "on ", ""),
+         Review_Date = str_replace_all(Review_Date, "PDT", ""),
+         Review_Date = str_replace_all(Review_Date, " PST", ""),
+         Review_Date = str_replace_all(Review_Date, "[()]", ""),
+         Review_Date = str_trim(Review_Date),
+         Review_Date = mdy_hm(Review_Date))
+
+glimpse(df)
+
+
+
+df.bymonth <- df |>
+  #mutate(reviews.month = round_date(Review_Date, "month")) |> # reviews by month-year
+  mutate(reviews.month = round_date(Review_Date, "3 months")) |> # reviews by month-year
+  #filter(Review_Date >= as.POSIXct("2014-01-01")) |>
+  group_by(make, reviews.month) |>
+  summarise(
+    mean.rating = mean(Rating, na.rm=TRUE),
+    num.reviews = n()
+  )
+
+glimpse(df.bymonth)
+
+
+p <- ggplot(df.bymonth, aes(x=reviews.month, y=mean.rating, group=make, color=make)) +
+  geom_line()
+
+p
+
+
+df |> 
+  slice_sample(n = 1000) |>
+  filter(Rating < 2) |>
+  select(make, Review_Title, Review) |>
+  View()
+
+
+
+# positive
+# negative
+# neutral
+
+
+# among those with negative review 
+# reliability
+# 
+
+# among those with positive review
+# engine power / performance
+# build quality
+# smooth handling
+# reliability and durability
+# technology and/or connectivity
+# gas mileage / fuel efficiency
+# safety
+# cargo space
+# driver assistance
+# comfort features / car noise / ride quality
+
+# niche issues
+# electrical problems
+# transmission problems
+
+# other
+# resale value
+# brand loyalty?
+
+#edmunds categories: utility driving comfort interior technology
+
+```
+
+
+
+
+## Descriptives
+
+```{r}
+
+df$GPT_Rating <- df$Rating + rnorm(length(df$Rating),0,1)
+
+# linear trend + confidence interval
+p3 <- ggplot(df, aes(x=Rating, y=GPT_Rating)) +
+  geom_point() +
+  geom_smooth(method=lm , color="red", fill="#69b3a2", se=TRUE) +
+  theme_ipsum()
+
+p3
+
+
+# confusion matrix approach
+
+# Define the bin breaks and labels
+bin_breaks <- c(-Inf, 2.5, 3.5, 5)
+bin_labels <- c("Negative", "Neutral", "Positive")
+
+# Use cut() to bin the age variable
+df <- df %>%
+  mutate(Rating_cat = cut(Rating, breaks = bin_breaks, labels = bin_labels, include.lowest = TRUE))
+
+
+
+df |> 
+  slice_sample(n = 1000) |>
+  select(Rating, Rating_cat) |>
+  View()
+
+
+
+
+```
+
+
+
+
+
+## Disaggregation
+
+results by American, European, Japanesse, and South Korean automakers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
