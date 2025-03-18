@@ -9,6 +9,7 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+      - "LLM-Assisted Analysis of Car Reviews.qmd"
 
 format:
   html:
