@@ -8,7 +8,7 @@ website:
     left:
       - href: llm-assisted-text-analysis.qmd
         text: Home
-      - about.qmd 
+      - about.qmd
 
 format:
   html:
