@@ -6,9 +6,10 @@ website:
   title: "llm-assisted-text-analysis"
   navbar:
     left:
-      - href: llm-assisted-text-analysis.qmd
+      - href: index.qmd
         text: Home
-      - about.qmd 
+      - about.qmd  
+      - llm-assisted-text-analysis.qmd
 
 format:
   html:

@@ -5,6 +5,15 @@ format: html
 editor: source
 ---
 
+<!--
+to set this up, we draw on a combination of:
+https://quarto.org/docs/publishing/github-pages.html
+https://quarto.org/docs/projects/quarto-projects.html
+https://www.youtube.com/watch?v=wZ9pZOFSCko&ab_channel=JoshuaFrench
+-->
+
+
+
 ## Quarto
 
 Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
