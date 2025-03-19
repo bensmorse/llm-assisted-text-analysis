@@ -155,14 +155,6 @@ p <- ggplot(df.bymonth, aes(x=reviews.month, y=mean.rating, group=country, color
 p
 
 
-df |> 
-  slice_sample(n = 1000) |>
-  filter(Rating < 2) |>
-  select(make, Review_Title, Review) |>
-  View()
-
-
-
 # positive
 # negative
 # neutral
@@ -197,11 +189,44 @@ df |>
 ```
 
 
+## LLM-Assisted Coding
+
+View the data:
+```{r}
+#| echo = FALSE
+
+df |>
+  slice_sample(n = 10) |>
+  select(make, Review_Title, Review)
+
+```
 
 
-## Descriptives
+Code the data:
+
+<!--
+Note: for first time, need to add your open_api_ai key as an environmental variable. To edit your environment, open Renvirion via: usethis::edit_r_environ()
+-->
 
 ```{r}
+library(ellmer)
+
+chat <- chat_openai(
+  model = "gpt-4o-mini",
+  system_prompt = "You are a friendly but terse assistant.",
+)
+
+
+```
+
+
+
+
+## Accuracy of LLM-Assisted Coding
+
+```{r}
+#| warning: false
+
 
 df$GPT_Rating <- df$Rating + rnorm(length(df$Rating),0,1)
 
@@ -219,18 +244,43 @@ p3
 bin_breaks <- c(-Inf, 2.5, 3.5, 5)
 bin_labels <- c("Negative", "Neutral", "Positive")
 
-# Use cut() to bin the age variable
+# Use cut() to bin the Rating variable
 df <- df %>%
   mutate(Rating_cat = cut(Rating, breaks = bin_breaks, labels = bin_labels, include.lowest = TRUE))
 
 
 
-df |> 
-  slice_sample(n = 1000) |>
-  select(Rating, Rating_cat) |>
-  View()
+# Load necessary library
+library(caret)
 
+# Example data: Actual and predicted classes
+actual <- factor(c("Class1", "Class2", "Class3", "Class1", "Class2", "Class3", "Class1", "Class2", "Class3"))
+predicted <- factor(c("Class1", "Class2", "Class3", "Class1", "Class2", "Class2", "Class3", "Class3", "Class1"))
 
+# Ensure both actual and predicted have the same levels (classes)
+levels(actual) <- levels(predicted) <- c("Class1", "Class2", "Class3")
+
+# Generate the confusion matrix
+conf_matrix <- confusionMatrix(predicted, actual)
+
+# Print the confusion matrix
+print(conf_matrix)
+
+# Load necessary library
+library(ggplot2)
+
+# Convert confusion matrix to a data frame
+conf_matrix_df <- as.data.frame(conf_matrix$table)
+
+# Plot the confusion matrix
+ggplot(conf_matrix_df, aes(x = Reference, y = Prediction, fill = Freq)) +
+  geom_tile() +
+  geom_text(aes(label = Freq), color = "white") +
+  scale_fill_gradient(low = "lightblue", high = "darkblue") +
+  labs(title = "Confusion Matrix",
+       x = "Actual",
+       y = "Predicted") +
+  theme_minimal()
 
 
 ```
