@@ -12,7 +12,17 @@ https://quarto.org/docs/projects/quarto-projects.html
 https://www.youtube.com/watch?v=wZ9pZOFSCko&ab_channel=JoshuaFrench
 -->
 
+<!-- chunk options
+#| fig-cap: "Air Quality"
 
+eval	Evaluate the code chunk (if false, just echos the code into the output).
+echo	Include the source code in output
+output	Include the results of executing the code in the output (true, false, or asis to indicate that the output is raw markdown and should not have any of Quarto’s standard enclosing markdown).
+warning	Include warnings in the output.
+error	Include errors in the output (note that this implies that errors executing code will not halt processing of the document).
+include	Catch all for preventing any output (code or results) from being included (e.g. include: false suppresses all output from the code block).
+
+-->
 
 ## Quarto
 
@@ -53,33 +63,55 @@ library(readxl)
 library(hrbrthemes)
 
 
-#library(reticulate)
-#use_python("C:\\Users\\benja\\anaconda3")
-
-
 ```
 
 
 ```{r insheet}
 
-df_dodge <- read_csv("data\\Scraped_Car_Review_dodge.csv", show_col_types = FALSE) |> mutate(make = "Dodge") 
-glimpse(df_dodge)
-
-df_ford <- read_csv("data\\Scraped_Car_Review_ford.csv", show_col_types = FALSE) |> mutate(make = "Ford") 
-glimpse(df_ford)
-
-df_toyota <- read_csv("data\\Scrapped_Car_Reviews_Toyota.csv", show_col_types = FALSE) |> mutate(make = "Toyota") 
-glimpse(df_toyota)
+# American car brands: ford, stellantis (chrysler, dodge, jeep, and ram), GM (Buick, Cadillac, Chevrolet, and GMC)
+# Japanese car brands: toyota, honda, mazda, nissan, mitsubishi, suzuki, subaru, infiniti, lexus, acura
+# European car brands: bmw, mercedes benz, volkswagen, audi, volvo, 
+# south korean car brands: kia, hyundai
 
 
+# Define the path to the subfolder containing the .csv files
+subfolder_path <- "data"
+
+# List all .csv files in the subfolder
+csv_files <- list.files(path = subfolder_path, pattern = "\\.csv$", full.names = TRUE)
 
 
-df <- bind_rows(df_dodge, df_ford, df_toyota)
+# Initialize an empty list to store the data frames
+data_list <- list()
+
+# Use lapply to read all .csv files and store them in a list
+# data_list <- lapply(csv_files, read_csv)
+
+# Loop through each file and read it into a data frame
+for (file in csv_files) {
+  
+  # extract the make from filename
+  # Using gsub to cut "Scraped_Car_Review_" and ".csv"
+  result <- gsub("data/Scrapped_Car_Reviews_", "", file)  
+  result <- gsub("data/Scrapped_Car_Review_", "", result)  
+  result <- gsub("data/Scraped_Car_Review_", "", result)  
+  result <- gsub("data/Scraped_Car_Review_", "", result)  
+  result <- gsub(".csv", "", result)  
+
+  # Read the .csv file & add variable for make
+  data <- read_csv(file, show_col_types = FALSE) |> mutate(make = result)
+  
+  # Store the data frame in the list
+  data_list[[file]] <- data
+}
+
+df <-bind_rows(data_list)
+glimpse(df)
 
 
 # remove leading words & spaces from date variable
 
-df <- df %>%
+df <- df |>
   mutate(Review_Date = str_replace_all(Review_Date, "on ", ""),
          Review_Date = str_replace_all(Review_Date, "PDT", ""),
          Review_Date = str_replace_all(Review_Date, " PST", ""),
@@ -89,13 +121,25 @@ df <- df %>%
 
 glimpse(df)
 
+# add variable for country
+
+df <- df %>%
+  mutate(country = case_when(
+    make %in% c("toyota", "honda", "mazda","nissan","mitsubishi","suzuki","subaru","infiniti","lexus","acura") ~ "Japanese",
+    make %in% c("ford", "chrysler", "dodge", "jeep", "ram", "buick", "cadillac", "chevrolet", "gmc", "lincoln", "mercury") ~ "American",
+    make %in% c("bmw", "mercedes-benz","volkswagen","audi", "volvo", "porsche", "mini") ~ "European",
+    make %in% c("kia", "hyundai") ~ "South Korean",
+    TRUE ~ make  # Default value for any unmatched cases
+  ))
+table(df$country)
+
 
 
 df.bymonth <- df |>
-  #mutate(reviews.month = round_date(Review_Date, "month")) |> # reviews by month-year
-  mutate(reviews.month = round_date(Review_Date, "3 months")) |> # reviews by month-year
+  mutate(reviews.month = round_date(Review_Date, "month")) |> # reviews by month-year
+  #mutate(reviews.month = round_date(Review_Date, "3 months")) |> # reviews by month-year
   #filter(Review_Date >= as.POSIXct("2014-01-01")) |>
-  group_by(make, reviews.month) |>
+  group_by(country, reviews.month) |>
   summarise(
     mean.rating = mean(Rating, na.rm=TRUE),
     num.reviews = n()
@@ -104,8 +148,9 @@ df.bymonth <- df |>
 glimpse(df.bymonth)
 
 
-p <- ggplot(df.bymonth, aes(x=reviews.month, y=mean.rating, group=make, color=make)) +
-  geom_line()
+p <- ggplot(df.bymonth, aes(x=reviews.month, y=mean.rating, group=country, color=country)) +
+  #geom_line
+  geom_smooth()
 
 p
 
@@ -167,7 +212,6 @@ p3 <- ggplot(df, aes(x=Rating, y=GPT_Rating)) +
   theme_ipsum()
 
 p3
-
 
 # confusion matrix approach
 
