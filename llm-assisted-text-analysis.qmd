@@ -130,7 +130,9 @@ df <- df %>%
     make %in% c("bmw", "mercedes-benz","volkswagen","audi", "volvo", "porsche", "mini") ~ "European",
     make %in% c("kia", "hyundai") ~ "South Korean",
     TRUE ~ make  # Default value for any unmatched cases
-  ))
+  )) |> 
+  rename(index = "...1")
+
 table(df$country)
 
 
@@ -155,36 +157,7 @@ p <- ggplot(df.bymonth, aes(x=reviews.month, y=mean.rating, group=country, color
 p
 
 
-# positive
-# negative
-# neutral
 
-
-# among those with negative review 
-# reliability
-# 
-
-# among those with positive review
-# engine power / performance
-# build quality
-# smooth handling
-# reliability and durability
-# technology and/or connectivity
-# gas mileage / fuel efficiency
-# safety
-# cargo space
-# driver assistance
-# comfort features / car noise / ride quality
-
-# niche issues
-# electrical problems
-# transmission problems
-
-# other
-# resale value
-# brand loyalty?
-
-#edmunds categories: utility driving comfort interior technology
 
 ```
 
@@ -209,12 +182,89 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 -->
 
 ```{r}
+#| warning: false
+
 library(ellmer)
 
 chat <- chat_openai(
   model = "gpt-4o-mini",
   system_prompt = "You are a friendly but terse assistant.",
 )
+
+# confirm chat is connected to API
+chat$chat("Is R a functional programming language?")
+
+
+
+prompt<-paste("Please car review the an owner submitted to Edmunds.com, a popular website for reviewing cars. Review the response carefully and code the following variables:")
+
+response_coded <- type_object(
+  prompt,
+  sentiment = type_enum("Extract the sentiment of the review", c("positive", "neutral", "negative")),
+  gpt_Rating = type_number("Based on this review, how do you think the owner would rate their vehicle? Use a numeric scale from 0 to 5, where 0 is very negative, and 5 is very positive."),
+  reliability = type_integer("1 if the owner references the vehicle's reliability in their review, 0 otherwise"),
+  utility = type_integer("1 if the owner references the vehicle's utility features in their review, 0 otherwise"),
+  driving = type_integer("1 if the owner references the vehicle's driving characteristics in their review, 0 otherwise"),
+  comfort = type_integer("1 if the owner references the vehicle's comfort in their review, 0 otherwise"),
+  interior = type_integer("1 if the owner references the vehicle's interior features in their review, 0 otherwise"),
+  fuel_efficiency= type_integer("1 if the owner references the vehicle's fuel efficiency in their review, 0 otherwise"),
+  technology = type_integer("1 if the owner references the vehicle's technology features in their review, 0 otherwise")
+)
+
+
+# DEMO STRUCTURED DATA FUNCTION
+
+text<-paste(df[165,"Review"])
+
+text
+
+chat <- chat_openai()
+coded.review <- chat$extract_data(text, type = response_coded)
+str(coded.review)
+
+# code a subset of responses
+
+
+df.sub <- df |>
+  slice_sample(n = 10)
+
+
+result = NULL
+
+for (i in 1:nrow(df.sub)) {
+  
+  out <- chat$extract_data(paste(df.sub[i,"Review"]), 
+                          type = response_coded)
+  
+  result<-rbind(result,cbind(df.sub[i,"index"],as.data.frame(out)))
+
+}
+
+glimpse(result) 
+
+
+
+# reliability
+# engine power / performance
+# build quality
+# smooth handling
+# reliability and durability
+# technology and/or connectivity
+# gas mileage / fuel efficiency
+# safety
+# cargo space
+# driver assistance
+# comfort features / car noise / ride quality
+
+# niche issues
+# electrical problems
+# transmission problems
+
+# other
+# resale value
+# brand loyalty?
+
+#edmunds categories: utility driving comfort interior technology
 
 
 ```
