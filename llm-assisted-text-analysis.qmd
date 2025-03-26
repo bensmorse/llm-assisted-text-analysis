@@ -26,14 +26,16 @@ include	Catch all for preventing any output (code or results) from being include
 
 ## Intro
 
-Companies often have access to unstructured textual data containing insights into consumer preferences and behavior (e.g., customer reviews, feedback surveys, support tickets, or other product feedback channels). Historically, quantifying and analyzing these data has been challenging because traditional natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.
+Companies commonly collect unstructured textual data containing insights into consumer preferences and behavior (e.g., customer reviews, feedback surveys, support tickets, or other product feedback channels). Historically, quantifying and analyzing these data has been challenging because traditional topic modeling or natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.
 
-This page provides a demonstration of the process by which a user can use LLMs to code and quantify unstructured textual data. The process involves three steps:
+This page provides a demonstration of the process by which an analyst can use LLMs to code and quantify unstructured textual data. The process involves four steps:
 
-1. Define the codes (variables) to be applied to the data as prompts for the LLM.
+1. Define the codes (variables) to be applied to the unstructured textual data.
 2. Using your preferred LLM's API, submit the unstructured textual data to the LLM alongside prompts for each code. Specify that results be returned in JSON format.
 3. Validate the accuracy of the resulting LLM-coded output against a small subset of human-coded observations. Repeat Steps 1-3 as necessary.  
-4. Summarize & analyze the resulting quantitative data. 
+4. Analyze the resulting quantitative data as desired. 
+
+[tbd: brief discussion of extensions and uses cases]
 
 
 
@@ -111,7 +113,7 @@ glimpse(df)
 
 # add variable for country
 
-df <- df %>%
+df <- df |>
   mutate(country = case_when(
     make %in% c("toyota", "honda", "mazda","nissan","mitsubishi","suzuki","subaru","infiniti","lexus","acura") ~ "Japanese",
     make %in% c("ford", "chrysler", "dodge", "jeep", "ram", "buick", "cadillac", "chevrolet", "gmc", "lincoln", "mercury") ~ "American",
@@ -123,6 +125,8 @@ df <- df %>%
 
 table(df$country)
 
+df <- df |>
+  select(-Author_Name)
 
 save(df, file = "data\\car_reviews.RData")
 
@@ -130,18 +134,17 @@ save(df, file = "data\\car_reviews.RData")
 ```
 
 
-## Set up
+## Data
+
+We'll use data on car reviews scrapped from [Edmunds.com](www.edmunds.com) and made publicly available on [Kaggle](www.kaggle.com). The data contain the review date, vehicle brand, review text and title, and the customer's overall satisfaction rating on a scale of 0 to 5 for 206,000\+ reviews submitted between 2004 and 2018. Our goal is to code the sentiment of each review (pretending that we don't already have the numeric satisfaction rating), as well as various metrics that we might be interested in tracking overtime, such as whether the review references reliability, safety, drive characteristics, or other variables of interest.  
 
 
 ```{r}
 
 # load packages
 library(tidyverse)
-library(haven)
-library(readr)
-library(RColorBrewer)
-library(ggplot2)
 library(dplyr)
+library(ggplot2)
 
 # load data
 load("data\\car_reviews.Rdata")
@@ -152,9 +155,9 @@ glimpse(df)
 
 
 
-## Data
+### Descriptives
 
-
+Visualize data:
 
 ```{r}
 #| warning: false
@@ -190,11 +193,15 @@ p
 View the data:
 
 ```{r}
-#| echo = FALSE
+#| echo:  FALSE
+#| warning: FALSE
 
 df |>
-  slice_sample(n = 10) |>
-  select(make, Review_Title, Review)
+  filter(nchar(Review) < 300 & nchar(Review) > 150) |>
+  slice_sample(n = 5) |>
+  select(make, Review_Title, Review) |>
+  knitr::kable(, "html")
+
 
 ```
 
@@ -204,7 +211,6 @@ Code the data:
 <!--
 Note: for first time, need to add your open_api_ai key as an environmental variable. To edit your environment, open Renvirion via: usethis::edit_r_environ()
 -->
-
 
 
 ```{r}
@@ -240,7 +246,7 @@ response_coded <- type_object(
 
 # DEMO STRUCTURED DATA FUNCTION
 
-text<-paste(df[165,"Review"])
+text <- paste(df[165,"Review"])
 
 text
 
