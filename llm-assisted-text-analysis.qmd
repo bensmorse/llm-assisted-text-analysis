@@ -26,17 +26,19 @@ include	Catch all for preventing any output (code or results) from being include
 
 ## Intro
 
-Companies commonly collect unstructured textual data containing insights into consumer preferences and behavior (e.g., customer reviews, feedback surveys, support tickets, or other product feedback channels). Historically, quantifying and analyzing these data has been challenging because traditional topic modeling or natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.
+Companies commonly collect unstructured textual data containing insights into consumer preferences and behavior (e.g., customer reviews, feedback surveys, support tickets, or other product feedback channels). Historically, quantifying and analyzing these data has been challenging, in part because traditional topic modeling or natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.
 
-This page provides a demonstration of the process by which an analyst can use LLMs to code and quantify unstructured textual data. The process involves four steps:
+This page provides a demonstration of the process by which LLMs can be used to code and quantify unstructured textual data. The process involves four steps:
 
-1. Define the codes (variables) to be applied to the unstructured textual data.
+1. Define the codes (variables) to be applied to the unstructured textual data.[^note1]
 2. Using your preferred LLM's API, submit the unstructured textual data to the LLM alongside prompts for each code. Specify that results be returned in JSON format.
-3. Validate the accuracy of the resulting LLM-coded output against a small subset of human-coded observations. Repeat Steps 1-3 as necessary.  
+3. Validate the accuracy of the resulting LLM-coded output against a small subset of human-coded observations. If necessary, refine the prompts and/or codes and repeat steps 1-3 until an acceptable accuracy level is reached.  
 4. Analyze the resulting quantitative data as desired. 
 
 [tbd: brief discussion of extensions and uses cases]
 
+
+[^note1]: Another option is to prompt the LLM to identify major themes or topics in sub-sample of unstructured text responses. The analyst can then use these topics as the basis for the codes that will be applied to the full corpus.     
 
 
 ```{r setup}
@@ -57,6 +59,7 @@ library(hrbrthemes)
 
 ```{r insheet}
 #| include: false 
+#| eval: false
 
 # American car brands: ford, stellantis (chrysler, dodge, jeep, and ram), GM (Buick, Cadillac, Chevrolet, and GMC)
 # Japanese car brands: toyota, honda, mazda, nissan, mitsubishi, suzuki, subaru, infiniti, lexus, acura
@@ -136,7 +139,7 @@ save(df, file = "data\\car_reviews.RData")
 
 ## Data
 
-We'll use data on car reviews scrapped from [Edmunds.com](www.edmunds.com) and made publicly available on [Kaggle](www.kaggle.com). The data contain the review date, vehicle brand, review text and title, and the customer's overall satisfaction rating on a scale of 0 to 5 for 206,000\+ reviews submitted between 2004 and 2018. Our goal is to code the sentiment of each review (pretending that we don't already have the numeric satisfaction rating), as well as various metrics that we might be interested in tracking overtime, such as whether the review references reliability, safety, drive characteristics, or other variables of interest.  
+We'll use data on car reviews scrapped from [Edmunds.com](www.edmunds.com) and made publicly available on [Kaggle](www.kaggle.com). The data contain the review date, vehicle brand, review text and title, and the customer's overall satisfaction rating on a scale of 0 to 5 for 206,000\+ reviews submitted between 2004 and 2018. Our goal is to code the sentiment of each review (setting aside for time being thatalready have the reviewer's numeric satisfaction rating), as well as various metrics that we might be interested in tracking overtime, such as whether the reviewer references the vehicle's reliability, safety, drive characteristics, or other variables of interest.  
 
 
 ```{r}
@@ -146,7 +149,7 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 
-# load data
+# load & view data
 load("data\\car_reviews.Rdata")
 glimpse(df)
 
@@ -161,6 +164,7 @@ Visualize data:
 
 ```{r}
 #| warning: false
+#| results: 'hide'   # Suppresses printed output (but shows plots)
 
 
 df.bymonth <- df |>
@@ -190,23 +194,33 @@ p
 
 ## LLM-Assisted Coding
 
-View the data:
+First, let's familiarize ourself with the type of data we'll be classifying. Here's a random sample of five reviews: 
 
 ```{r}
 #| echo:  FALSE
 #| warning: FALSE
 
-df |>
-  filter(nchar(Review) < 300 & nchar(Review) > 150) |>
-  slice_sample(n = 5) |>
-  select(make, Review_Title, Review) |>
-  knitr::kable(, "html")
+library(kableExtra)
 
+df |>
+  filter(nchar(Review) < 300 & nchar(Review) > 150) |> # for readability, filter out very long reviews 
+  slice_sample(n = 5) |> 
+  select(make, Review_Title, Review) |>
+  #knitr::kable(, "html")
+  knitr::kable(format = "html", escape = FALSE) |>  # escape=FALSE allows HTML in cells
+  kable_styling(bootstrap_options = c("striped", "hover")) |>
+  scroll_box(width = "100%", height = "300px")  # Adds scroll if needed
 
 ```
 
 
-Code the data:
+<!--
+We'll use the @ellmer package to code the data. 
+-->
+
+\vspace{1em}
+
+We'll use the [**ellmer**](https://ellmer.tidyverse.org/) package to code the data. ellmer supports a wide variety of LLM providers; for now, we'll use OpenAI's GPT-4o model. 
 
 <!--
 Note: for first time, need to add your open_api_ai key as an environmental variable. To edit your environment, open Renvirion via: usethis::edit_r_environ()
@@ -226,8 +240,12 @@ chat <- chat_openai(
 # confirm chat is connected to API
 chat$chat("Is R a functional programming language?")
 
+```
 
 
+Define the prompts that will be used to code the data:
+
+```{r}
 prompt<-paste("Please car review the an owner submitted to Edmunds.com, a popular website for reviewing cars. Review the response carefully and code the following variables:")
 
 response_coded <- type_object(
@@ -244,9 +262,12 @@ response_coded <- type_object(
 )
 
 
-# DEMO STRUCTURED DATA FUNCTION
+# Demo structured-data function on a single review
 
-text <- paste(df[165,"Review"])
+text <- df |>
+  slice_sample(n = 1) |> 
+  select(Review) |>
+  as.character()
 
 text
 
@@ -254,29 +275,71 @@ chat <- chat_openai()
 coded.review <- chat$extract_data(text, type = response_coded)
 str(coded.review)
 
+
+
+```
+
+
+The next step would be to loop through the entire corpus, coding each observation one-by-one. However, with over $206,000$ observations and about 2 seconds for each query to the API, this code would take about 5 days to run. For purposes of this demonstration, we'll use a sample of $10,000$ randomly sampled observations. 
+
+
+```{r}
+#| eval: false
 # code a subset of responses
-
-
 df.sub <- df |>
-  slice_sample(n = 10)
-
+  slice_sample(n = 10000)
 
 result = NULL
-
 for (i in 1:nrow(df.sub)) {
-  
   out <- chat$extract_data(paste(df.sub[i,"Review"]), 
                           type = response_coded)
-  
-  result<-rbind(result,cbind(df.sub[i,"index"],as.data.frame(out)))
-
+  result <- rbind(result,
+                  cbind(df.sub[i,"index"],as.data.frame(out)))
 }
-
 glimpse(result) 
 
 ```
 
 
+```{r}
+#| eval: false
+#| include: false
+
+# code to run just once, to code the data ... 
+
+df.sub <- df |>
+  slice_sample(n = 10)
+
+result = NULL
+for (i in 1:nrow(df.sub)) {
+  out <- chat$extract_data(paste(df.sub[i,"Review"]), 
+                          type = response_coded)
+  result <- rbind(result,
+                  cbind(df.sub[i,"index"],as.data.frame(out)))
+  print(i) # iteration counter
+}
+
+glimpse(result)
+
+
+write_csv(result, file = "data\\car_reviews_coded_sample1.csv")
+
+
+
+```
+
+
+Having run the data, we now have a fully-coded corpus:
+
+```{r}
+#| echo: false
+#| warning: false
+
+df.coded <- read_csv("data\\car_reviews_coded_sample1.csv")
+glimpse(df.coded)
+
+
+```
 
 ```{r}
 #| eval: false
