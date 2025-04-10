@@ -1,0 +1,15 @@
+index,sentiment,gpt_Rating,reliability,utility,driving,comfort,interior,fuel_efficiency,technology
+16575,positive,4,1,1,1,1,1,0,0
+71,positive,4,0,1,1,0,1,0,0
+7587,positive,5,1,1,1,1,1,0,0
+12786,negative,1,1,0,0,0,1,0,0
+5125,positive,5,1,1,1,1,1,1,0
+5306,positive,5,0,0,1,1,1,1,0
+2068,positive,4,1,1,0,1,0,1,0
+2425,positive,5,1,0,1,1,1,0,0
+1004,positive,5,1,1,1,1,1,0,1
+4416,positive,4.5,1,1,1,1,1,0,0
+3393,positive,4,0,1,1,1,0,0,0
+435,neutral,3,1,0,1,1,0,0,0
+5898,positive,5,1,1,1,1,1,1,0
+8656,positive,4,1,1,1,1,0,1,0

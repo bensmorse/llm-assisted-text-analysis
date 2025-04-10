@@ -52,6 +52,7 @@ library(ggplot2)
 library(dplyr)
 library(readxl)
 library(hrbrthemes)
+library(lubridate)
 
 ```
 
@@ -71,7 +72,7 @@ library(hrbrthemes)
 subfolder_path <- "data"
 
 # List all .csv files in the subfolder
-csv_files <- list.files(path = subfolder_path, pattern = "\\.csv$", full.names = TRUE)
+csv_files <- list.files(path = subfolder_path, pattern = paste0("Scra*",".*\\.csv$"), full.names = TRUE)
 
 
 # Initialize an empty list to store the data frames
@@ -114,22 +115,33 @@ df <- df |>
 
 glimpse(df)
 
-# add variable for country
+# for some reason, mdy_hm didn't convert above
 
 df <- df |>
+  mutate(Review_Date = mdy_hm(Review_Date))
+glimpse(df)
+
+# add variable for country and a unique ID
+
+df <- df |>
+  mutate(index = 1:nrow(df)) |>
+  select(-c("...1")) |>
   mutate(country = case_when(
     make %in% c("toyota", "honda", "mazda","nissan","mitsubishi","suzuki","subaru","infiniti","lexus","acura") ~ "Japanese",
     make %in% c("ford", "chrysler", "dodge", "jeep", "ram", "buick", "cadillac", "chevrolet", "gmc", "lincoln", "mercury") ~ "American",
     make %in% c("bmw", "mercedes-benz","volkswagen","audi", "volvo", "porsche", "mini") ~ "European",
     make %in% c("kia", "hyundai") ~ "South Korean",
     TRUE ~ make  # Default value for any unmatched cases
-  )) |> 
-  rename(index = "...1")
+  ))
 
+glimpse(df)
+length(unique(df$index))
 table(df$country)
+
 
 df <- df |>
   select(-Author_Name)
+
 
 save(df, file = "data\\car_reviews.RData")
 
@@ -185,8 +197,6 @@ p <- ggplot(df.bymonth, aes(x=reviews.month, y=mean.rating, group=country, color
   geom_smooth()
 
 p
-
-
 
 
 ```
@@ -307,36 +317,102 @@ glimpse(result)
 
 # code to run just once, to code the data ... 
 
+
+# randomly assign groups
+
+categories <- 1:30
+
+# Randomly assign categories to each observation
+set.seed(123)
+df <- df %>%
+  mutate(
+    # Assign random category with equal probability
+    sample_group = sample(categories, size = n(), replace = TRUE)
+    )
+
+
+
 df.sub <- df |>
-  slice_sample(n = 10)
+  filter(sample_group == 2)
+
+# re-initiate connection to API
+chat <- chat_openai(
+  model = "gpt-4o-mini",
+  system_prompt = "You are a friendly but terse assistant.",
+)
+
+# confirm chat is connected to API
+chat$chat("Is R a functional programming language?")
+
+#to do: reinitiate every 100 requests
+
 
 result = NULL
-for (i in 1:nrow(df.sub)) {
-  out <- chat$extract_data(paste(df.sub[i,"Review"]), 
+for (i in 1:1000) {
+  out <- chat$extract_data(as.character(df.sub[i,"Review"]), 
                           type = response_coded)
   result <- rbind(result,
                   cbind(df.sub[i,"index"],as.data.frame(out)))
   print(i) # iteration counter
+  #Sys.sleep(2)
+  
+  if(i %% 5 == 0) Sys.sleep(2) # Pause every 5 requests
+  if(i %% 100 == 0) {  # re-initiate connection to API every 100 obs
+  chat <- chat_openai(
+    model = "gpt-4o-mini",
+    system_prompt = "You are a friendly but terse assistant.",
+    )
+}
 }
 
 glimpse(result)
 
+write_csv(result, file = "data\\car_reviews_coded_sample2_1.csv")
 
-write_csv(result, file = "data\\car_reviews_coded_sample1.csv")
 
+
+# compile all coded batches and save as .csv
+
+  file_list <- list.files(path = "data", 
+                       pattern = "coded_sample\\d+",
+                       full.names = TRUE) 
+ 
+  # Initialize an empty list to store data
+  data_list <- list()
+  
+  # Read each file and add to the list
+  for (i in seq_along(file_list)) {
+    message("Reading file ", i, " of ", length(file_list), ": ", basename(file_list[i]))
+    
+    # Read the CSV file and add filename as a column
+    data_list[[i]] <- read_csv(file_list[i], show_col_types = FALSE) #%>%
+      #mutate(source_file = basename(file_list[i]))
+  }
+  
+  # Combine all data frames by rows
+  combined_data <- bind_rows(data_list)
+  dim(combined_data)
+  
+write_csv(combined_data, "data\\car_reviews_coded_sample.csv")  
 
 
 ```
 
 
-Having run the data, we now have a fully-coded corpus:
+Having run the code, we now have a fully-coded sample of 10000 reviews:
 
 ```{r}
 #| echo: false
 #| warning: false
 
-df.coded <- read_csv("data\\car_reviews_coded_sample1.csv")
+df.coded.sample <- read_csv("data\\car_reviews_coded_sample.csv",
+                     show_col_types = FALSE) # suppress column type messages
+glimpse(df.coded.sample)
+
+# keep only matching rows in coded sample and full sample
+df.coded <- inner_join(df.coded.sample, df, by = "index")
 glimpse(df.coded)
+
 
 
 ```
