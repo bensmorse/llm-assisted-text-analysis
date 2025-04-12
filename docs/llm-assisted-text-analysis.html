@@ -253,13 +253,13 @@ include Catch all for preventing any output (code or results) from being include
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 206,181
 Columns: 8
-$ index         &lt;dbl&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16…
 $ Review_Date   &lt;dttm&gt; 2005-10-13 15:30:00, 2005-07-17 21:59:00, 2002-07-16 00…
 $ Vehicle_Title &lt;chr&gt; "2002 Dodge Ram Cargo Van 1500 3dr Van (3.9L 6cyl 3A)", …
 $ Review_Title  &lt;chr&gt; "Great delivery vehicle", "Disappointmnet", "Sweet van",…
 $ Review        &lt;chr&gt; "It's been a great delivery vehicle for my cafe business…
 $ Rating        &lt;dbl&gt; 4.625, 2.125, 5.000, 4.500, 2.875, 2.250, 3.000, 4.625, …
 $ make          &lt;chr&gt; "dodge", "dodge", "dodge", "dodge", "dodge", "dodge", "d…
+$ index         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1…
 $ country       &lt;chr&gt; "American", "American", "American", "American", "America…</code></pre>
 </div>
 </div>
@@ -281,7 +281,7 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df.bymonth, <span class="fu">aes</span>(<span class="at">x=</span>reviews.month, <span class="at">y=</span>mean.rating, <span class="at">group=</span>country, <span class="at">color=</span>country)) <span class="sc">+</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_line</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_line()</span></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -297,7 +297,7 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </section>
 <section id="llm-assisted-coding" class="level2">
 <h2 class="anchored" data-anchor-id="llm-assisted-coding">LLM-Assisted Coding</h2>
-<p>Let’s take a deeper look at a few of the reviews that we’ll be classifying:</p>
+<p>First, let’s familiarize ourself with the type of data we’ll be classifying. Here’s a random sample of five reviews:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
@@ -311,29 +311,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ford</td>
-<td style="text-align: left;">Best of the SUVs for the money</td>
-<td style="text-align: left;">Looked at everything else and kept coming back to the Sport for the price and looks. Perfect for a couple who never hauls kids. Drives well on the road with much more response than the 4 door due to 600 lbs of less wt. Same engine and tranny as the 4door. Quiet on the road.</td>
+<td style="text-align: left;">volkswagen</td>
+<td style="text-align: left;">fun to drive pain to fix</td>
+<td style="text-align: left;">I love driving this car. It is stylish sporty for a sedan. Great leather interior. it is SO comfortable. However this car is haunted by electrical problems in the dashboard for many years.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">chevrolet</td>
-<td style="text-align: left;">Enjoyable Experience</td>
-<td style="text-align: left;">Ride is excellent, as if on rails. Performance is outstanding as is handling. Some road noise from the stock tires, but it is tolerable. Six spped shifting is very crisp but could stand to be a shorter throw design. Overall review is that it is an excellent choice for a performance car!</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">toyota</td>
-<td style="text-align: left;">Love my Solara</td>
-<td style="text-align: left;">Thought about updating my 2003 Solara but unable to find anything I liked as much as what I have. So, will be keeping it as long as it provides me with a comfortable ride and few repairs.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ford</td>
-<td style="text-align: left;">1998 Ranger</td>
-<td style="text-align: left;">I have been very happy with my 1998 Ranger. Only been in shop one time in 4 years with very minor problem. This is my 2nd Ranger and will probably buy another one.</td>
+<td style="text-align: left;">I still love this car!</td>
+<td style="text-align: left;">I bought this car brand new in 2005 and 3 years later I still love this car! It's roomy, drives smooth and is cute! This car is very reliable and even with 143,000 miles on it I know I can still count on my Matrix!</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">chrysler</td>
-<td style="text-align: left;">Great Convert</td>
-<td style="text-align: left;">Fun car and noticed. Drives like a big car and handles almost like a sports car. The best (only) ragtop I've owned. I love it. Great car for the money.</td>
+<td style="text-align: left;">dodge</td>
+<td style="text-align: left;">Not worth the money</td>
+<td style="text-align: left;">If it wasn't free to me....no way. There's not many trucks, let alone one by Dodge that can command a $45k price....not worth it just to get a cool powerful motor.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dodge</td>
+<td style="text-align: left;">2004 GrandCaravan A Winner</td>
+<td style="text-align: left;">My 2004 SXT Dodge GrandCaravan is my first van and it really did exceed my expectations for comfort, convience and reliability. I will buy another Dodge GrandCaravan SXT for my next vehicle purchase</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ford</td>
+<td style="text-align: left;">Typical Ford family sedan</td>
+<td style="text-align: left;">This car reminds me of the family cars I grew up with. The all around everyday, and the two week summer vacation crusier. Room for everybody and everything. The power is there when you need. Handles well. Brakes well. Excellent value. Easy maintainence.</td>
 </tr>
 </tbody>
 </table>
@@ -359,10 +359,10 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming. It allows for the use of functions as 
-first-class citizens, supports higher-order functions, and encourages a 
-declarative style of coding. However, R also incorporates other programming 
-paradigms, such as imperative and object-oriented programming.</code></pre>
+<pre><code>Yes, R supports functional programming. It allows functions to be treated as 
+first-class objects, enabling features like higher-order functions, anonymous 
+functions, and more. However, R is also object-oriented and imperative, making 
+it a multi-paradigm language.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -392,7 +392,7 @@ paradigms, such as imperative and object-oriented programming.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Camry is a good reliable car. Driven it 41k since Aug'09. Doesnt get your pulses going and begs to not go fast but its reliable, comfortable and spacious. The 4-cylinder engine is ok. Not as fuel efficient as compared to the current crop of midsize cars. I get about 26-27 mpg with mostly city driving. Highway driving gets 30 mpg.I am mostly satisfied but the interiors are cheap plastic and downmarket. HOwever seats are comfy. Suspension is soft but hits its max pretty quickly.I wouldnt buy a camry again - too ordinary and cheap looking for me. The new Accord looks amazing and has the same reliability, better fuel efficiency. I will probable consider that before i consider Camry."</code></pre>
+<pre><code>[1] "Traded in our 18-month old Tacoma truck for the Highlander.  Same pushy salesman/dealer for both.  In less than 2,000 miles, the accelerator \"lost power\" three times.  Second time, I went to talk to the sales people; they told us to bring it in to the service dept. the next time it happened.  Two weeks later, it happened again.  Luckily the third event happened near the dealer.  They kept it overnight and replaced the accelerator pedal! Almost got hit on a main road because the car would not move no matter how much I pressed on the accelerator. I could not get of the way of oncoming traffic. Scary!  Lost all confidence in Toyota, even though I still own a 2008 Lexus LS460."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -402,65 +402,97 @@ paradigms, such as imperative and object-oriented programming.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "neutral"
- $ gpt_Rating     : num 3
+ $ sentiment      : chr "negative"
+ $ gpt_Rating     : int 1
  $ reliability    : int 1
- $ utility        : int 1
+ $ utility        : int 0
  $ driving        : int 1
- $ comfort        : int 1
- $ interior       : int 1
- $ fuel_efficiency: int 1
+ $ comfort        : int 0
+ $ interior       : int 0
+ $ fuel_efficiency: int 0
  $ technology     : int 0</code></pre>
 </div>
 </div>
 <p>The next step would be to loop through the entire corpus, coding each observation one-by-one. However, with over <span class="math inline">\(206,000\)</span> observations and about 2 seconds for each query to the API, this code would take about 5 days to run. For purposes of this demonstration, we’ll use a sample of <span class="math inline">\(10,000\)</span> randomly sampled observations.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code a subset of responses</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>df.sub <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10000</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>result <span class="ot">=</span> <span class="cn">NULL</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df.sub)) {</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> chat<span class="sc">$</span><span class="fu">extract_data</span>(<span class="fu">paste</span>(df.sub[i,<span class="st">"Review"</span>]), </span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">type =</span> response_coded)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">rbind</span>(result,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">cbind</span>(df.sub[i,<span class="st">"index"</span>],<span class="fu">as.data.frame</span>(out)))</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(result) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df.sub <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10000</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>result <span class="ot">=</span> <span class="cn">NULL</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df.sub)) {</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> chat<span class="sc">$</span><span class="fu">extract_data</span>(<span class="fu">paste</span>(df.sub[i,<span class="st">"Review"</span>]), </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">type =</span> response_coded)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">rbind</span>(result,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">cbind</span>(df.sub[i,<span class="st">"index"</span>],<span class="fu">as.data.frame</span>(out)))</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(result) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Having run the data, we now have a fully-coded corpus:</p>
+<p>Having run the code, we now have a fully-coded sample of 10000 reviews:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 10
+<pre><code>Rows: 7,000
 Columns: 10
-$ index           &lt;dbl&gt; 1134, 7807, 2750, 7202, 1782, 7255, 2800, 3234, 7134, …
-$ sentiment       &lt;chr&gt; "neutral", "negative", "positive", "positive", "positi…
-$ gpt_Rating      &lt;dbl&gt; 3, 1, 4, 5, 5, 2, 1, 5, 1, 4
-$ reliability     &lt;dbl&gt; 0, 1, 0, 0, 1, 1, 1, 1, 0, 1
-$ utility         &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
-$ driving         &lt;dbl&gt; 1, 0, 0, 0, 1, 0, 0, 1, 0, 0
-$ comfort         &lt;dbl&gt; 0, 0, 0, 0, 1, 1, 0, 1, 0, 0
-$ interior        &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 1, 0, 0
-$ fuel_efficiency &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 0, 0, 0
-$ technology      &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 1, 1</code></pre>
+$ index           &lt;dbl&gt; 62, 183, 230, 251, 281, 308, 312, 340, 396, 454, 475, …
+$ sentiment       &lt;chr&gt; "positive", "negative", "neutral", "negative", "positi…
+$ gpt_Rating      &lt;dbl&gt; 5, 1, 3, 1, 5, 5, 4, 5, 1, 1, 4, 2, 5, 4, 5, 4, 1, 1, …
+$ reliability     &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, …
+$ utility         &lt;dbl&gt; 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, …
+$ driving         &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, …
+$ comfort         &lt;dbl&gt; 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, …
+$ interior        &lt;dbl&gt; 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, …
+$ fuel_efficiency &lt;dbl&gt; 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, …
+$ technology      &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, …</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 7,000
+Columns: 17
+$ index           &lt;dbl&gt; 62, 183, 230, 251, 281, 308, 312, 340, 396, 454, 475, …
+$ sentiment       &lt;chr&gt; "positive", "negative", "neutral", "negative", "positi…
+$ gpt_Rating      &lt;dbl&gt; 5, 1, 3, 1, 5, 5, 4, 5, 1, 1, 4, 2, 5, 4, 5, 4, 1, 1, …
+$ reliability     &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, …
+$ utility         &lt;dbl&gt; 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, …
+$ driving         &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, …
+$ comfort         &lt;dbl&gt; 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, …
+$ interior        &lt;dbl&gt; 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, …
+$ fuel_efficiency &lt;dbl&gt; 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, …
+$ technology      &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, …
+$ Review_Date     &lt;dttm&gt; 2006-08-14 11:30:00, 2008-03-16 08:12:00, 2006-08-03 …
+$ Vehicle_Title   &lt;chr&gt; "2006 Dodge Magnum Wagon RT 4dr Wagon (5.7L 8cyl 5A)",…
+$ Review_Title    &lt;chr&gt; "No more imports for me, thank you", "Chrysler Quality…
+$ Review          &lt;chr&gt; "I am a field engineer. I drive in total comfort, econ…
+$ Rating          &lt;dbl&gt; 4.875, 3.000, 4.625, 1.750, 4.875, 5.000, 4.625, 5.000…
+$ make            &lt;chr&gt; "dodge", "dodge", "dodge", "dodge", "dodge", "dodge", …
+$ country         &lt;chr&gt; "American", "American", "American", "American", "Ameri…</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,393
+Columns: 3
+$ reviews.month      &lt;dttm&gt; 2002-03-01, 2002-03-01, 2002-03-01, 2002-03-01, 20…
+$ car_characteristic &lt;chr&gt; "reliability", "utility", "driving", "comfort", "in…
+$ prop               &lt;dbl&gt; 0.45945946, 0.16216216, 0.67567568, 0.45945946, 0.2…</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="llm-assisted-text-analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="accuracy-of-llm-assisted-coding" class="level2">
 <h2 class="anchored" data-anchor-id="accuracy-of-llm-assisted-coding">Accuracy of LLM-Assisted Coding</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>GPT_Rating <span class="ot">&lt;-</span> df<span class="sc">$</span>Rating <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(df<span class="sc">$</span>Rating),<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># linear trend + confidence interval</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>Rating, <span class="at">y=</span>GPT_Rating)) <span class="sc">+</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm , <span class="at">color=</span><span class="st">"red"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>, <span class="at">se=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>()</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>GPT_Rating <span class="ot">&lt;-</span> df<span class="sc">$</span>Rating <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(df<span class="sc">$</span>Rating),<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># linear trend + confidence interval</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>Rating, <span class="at">y=</span>GPT_Rating)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm , <span class="at">color=</span><span class="st">"red"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>, <span class="at">se=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>()</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -468,33 +500,33 @@ $ technology      &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 1, 1</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix approach</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the bin breaks and labels</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>bin_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">2.5</span>, <span class="fl">3.5</span>, <span class="dv">5</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>bin_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Negative"</span>, <span class="st">"Neutral"</span>, <span class="st">"Positive"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Use cut() to bin the Rating variable</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rating_cat =</span> <span class="fu">cut</span>(Rating, <span class="at">breaks =</span> bin_breaks, <span class="at">labels =</span> bin_labels, <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Example data: Actual and predicted classes</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>))</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>))</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure both actual and predicted have the same levels (classes)</span></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(actual) <span class="ot">&lt;-</span> <span class="fu">levels</span>(predicted) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>)</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix</span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(predicted, actual)</span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the confusion matrix</span></span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(conf_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix approach</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the bin breaks and labels</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>bin_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">2.5</span>, <span class="fl">3.5</span>, <span class="dv">5</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>bin_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Negative"</span>, <span class="st">"Neutral"</span>, <span class="st">"Positive"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Use cut() to bin the Rating variable</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rating_cat =</span> <span class="fu">cut</span>(Rating, <span class="at">breaks =</span> bin_breaks, <span class="at">labels =</span> bin_labels, <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Example data: Actual and predicted classes</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>))</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>))</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure both actual and predicted have the same levels (classes)</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(actual) <span class="ot">&lt;-</span> <span class="fu">levels</span>(predicted) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(predicted, actual)</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the confusion matrix</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(conf_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Confusion Matrix and Statistics
 
@@ -527,21 +559,21 @@ Detection Rate              0.2222        0.2222        0.1111
 Detection Prevalence        0.3333        0.3333        0.3333
 Balanced Accuracy           0.7500        0.7500        0.5000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert confusion matrix to a data frame</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>conf_matrix_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(conf_matrix<span class="sc">$</span>table)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the confusion matrix</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(conf_matrix_df, <span class="fu">aes</span>(<span class="at">x =</span> Reference, <span class="at">y =</span> Prediction, <span class="at">fill =</span> Freq)) <span class="sc">+</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Freq), <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"lightblue"</span>, <span class="at">high =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Confusion Matrix"</span>,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Actual"</span>,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted"</span>) <span class="sc">+</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert confusion matrix to a data frame</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>conf_matrix_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(conf_matrix<span class="sc">$</span>table)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the confusion matrix</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(conf_matrix_df, <span class="fu">aes</span>(<span class="at">x =</span> Reference, <span class="at">y =</span> Prediction, <span class="at">fill =</span> Freq)) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Freq), <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"lightblue"</span>, <span class="at">high =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Confusion Matrix"</span>,</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Actual"</span>,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted"</span>) <span class="sc">+</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

@@ -193,7 +193,7 @@ glimpse(df.bymonth)
 
 
 p <- ggplot(df.bymonth, aes(x=reviews.month, y=mean.rating, group=country, color=country)) +
-  #geom_line
+  #geom_line()
   geom_smooth()
 
 p
@@ -413,6 +413,40 @@ glimpse(df.coded.sample)
 df.coded <- inner_join(df.coded.sample, df, by = "index")
 glimpse(df.coded)
 
+
+# visualize the data
+
+df.bymonth <- df.coded |>
+  mutate(reviews.month = round_date(Review_Date, "month")) |> # reviews by month-year
+  group_by(reviews.month) |>
+  summarise(
+    #mean.Rating = mean(Rating, na.rm=TRUE),
+    #mean.gpt_Rating = mean(gpt_Rating, na.rm=TRUE),
+    mean.reliability = mean(reliability, na.rm=TRUE),
+    mean.utility = mean(utility, na.rm=TRUE),
+    mean.driving = mean(driving, na.rm=TRUE),
+    mean.comfort = mean(comfort, na.rm=TRUE),
+    mean.interior = mean(interior, na.rm=TRUE),
+    mean.fuel_efficiency = mean(fuel_efficiency, na.rm=TRUE),
+    mean.technology = mean(technology, na.rm=TRUE)
+  ) |> 
+  pivot_longer(
+  cols = starts_with("mean."),  # columns to reshape
+  names_to = "car_characteristic",          # new column name for the variable names
+  names_prefix = "mean.",       # remove prefix from column names
+  values_to = "prop"            # new column name for the values
+  ) 
+  
+glimpse(df.bymonth)
+
+
+
+
+p <- ggplot(df.bymonth, aes(x=reviews.month, y=prop, group=car_characteristic, color=car_characteristic)) +
+  #geom_line()
+  geom_smooth()
+
+p
 
 
 ```
