@@ -151,7 +151,7 @@ save(df, file = "data\\car_reviews.RData")
 
 ## Data
 
-We'll use data on car reviews scrapped from [Edmunds.com](www.edmunds.com) and made publicly available on [Kaggle](www.kaggle.com). The data contain the review date, vehicle brand, review text and title, and the customer's overall satisfaction rating on a scale of 0 to 5 for 206,000\+ reviews submitted between 2004 and 2018. Our goal is to code the sentiment of each review (setting aside for time being thatalready have the reviewer's numeric satisfaction rating), as well as various metrics that we might be interested in tracking overtime, such as whether the reviewer references the vehicle's reliability, safety, drive characteristics, or other variables of interest.  
+We'll use data on car reviews scrapped from [Edmunds.com](www.edmunds.com) and made publicly available on [Kaggle](www.kaggle.com). For each review, the dataset provides the date, vehicle brand, review text and title, and the customer's overall satisfaction rating on a scale of 0 to 5 for. The data cover approximately 206,000 reviews submitted between 2004 and 2018. The goal is to code the sentiment of each review (setting aside for time being thatalready have the reviewer's numeric satisfaction rating), as well as various metrics that we might be interested in tracking overtime, such as whether the reviewer references the vehicle's reliability, safety, drive characteristics, or other variables of interest.  
 
 
 ```{r}
@@ -172,7 +172,7 @@ glimpse(df)
 
 ### Descriptives
 
-Visualize data:
+The following plot summarizes the average rating (on a scale of 0 to 5) overtime, disaggregated by automaker region:
 
 ```{r}
 #| warning: false
@@ -181,20 +181,16 @@ Visualize data:
 
 df.bymonth <- df |>
   mutate(reviews.month = round_date(Review_Date, "month")) |> # reviews by month-year
-  #mutate(reviews.month = round_date(Review_Date, "3 months")) |> # reviews by month-year
-  #filter(Review_Date >= as.POSIXct("2014-01-01")) |>
+  #mutate(reviews.month = round_date(Review_Date, "3 months")) |> # reviews by quarter
   group_by(country, reviews.month) |>
   summarise(
     mean.rating = mean(Rating, na.rm=TRUE),
     num.reviews = n()
   )
 
-glimpse(df.bymonth)
-
-
 p <- ggplot(df.bymonth, aes(x=reviews.month, y=mean.rating, group=country, color=country)) +
-  #geom_line()
-  geom_smooth()
+  geom_smooth(method = "loess", span = .25) +
+  theme_minimal()
 
 p
 
@@ -290,14 +286,14 @@ str(coded.review)
 ```
 
 
-The next step would be to loop through the entire corpus, coding each observation one-by-one. However, with over $206,000$ observations and about 2 seconds for each query to the API, this code would take about 5 days to run. For purposes of this demonstration, we'll use a sample of $10,000$ randomly sampled observations. 
+The next step would be to loop through the entire corpus, coding each observation one-by-one. However, with over $206,000$ observations and about 2 seconds for each query to the API, this code would take about 5 days to run. For purposes of this demonstration, we'll use a sample of $7,000$ randomly sampled observations: 
 
 
 ```{r}
 #| eval: false
 # code a subset of responses
 df.sub <- df |>
-  slice_sample(n = 10000)
+  slice_sample(n = 7000)
 
 result = NULL
 for (i in 1:nrow(df.sub)) {
@@ -399,7 +395,7 @@ write_csv(combined_data, "data\\car_reviews_coded_sample.csv")
 ```
 
 
-Having run the code, we now have a fully-coded sample of 10000 reviews:
+Having run the code, we now have a fully-coded sample of 7000 reviews:
 
 ```{r}
 #| echo: false
@@ -411,8 +407,14 @@ glimpse(df.coded.sample)
 
 # keep only matching rows in coded sample and full sample
 df.coded <- inner_join(df.coded.sample, df, by = "index")
-glimpse(df.coded)
+#glimpse(df.coded)
 
+```
+
+Which we can then visualize as follows:
+
+```{r}
+#| warning: false
 
 # visualize the data
 
@@ -420,13 +422,9 @@ df.bymonth <- df.coded |>
   mutate(reviews.month = round_date(Review_Date, "month")) |> # reviews by month-year
   group_by(reviews.month) |>
   summarise(
-    #mean.Rating = mean(Rating, na.rm=TRUE),
-    #mean.gpt_Rating = mean(gpt_Rating, na.rm=TRUE),
     mean.reliability = mean(reliability, na.rm=TRUE),
-    mean.utility = mean(utility, na.rm=TRUE),
-    mean.driving = mean(driving, na.rm=TRUE),
+    mean.driving_characteristics = mean(driving, na.rm=TRUE),
     mean.comfort = mean(comfort, na.rm=TRUE),
-    mean.interior = mean(interior, na.rm=TRUE),
     mean.fuel_efficiency = mean(fuel_efficiency, na.rm=TRUE),
     mean.technology = mean(technology, na.rm=TRUE)
   ) |> 
@@ -434,22 +432,87 @@ df.bymonth <- df.coded |>
   cols = starts_with("mean."),  # columns to reshape
   names_to = "car_characteristic",          # new column name for the variable names
   names_prefix = "mean.",       # remove prefix from column names
-  values_to = "prop"            # new column name for the values
+  values_to = "proportion"            # new column name for the values
   ) 
   
-glimpse(df.bymonth)
+#glimpse(df.bymonth)
 
-
-
-
-p <- ggplot(df.bymonth, aes(x=reviews.month, y=prop, group=car_characteristic, color=car_characteristic)) +
-  #geom_line()
-  geom_smooth()
+p <- ggplot(df.bymonth, aes(x=reviews.month, y=proportion*100, group=car_characteristic, color=car_characteristic)) +
+  geom_smooth(method = "loess", span = .25) +
+  labs(
+  x = "Year", 
+  y = "% of Reviews Mentioning Characteristic",
+  color = "Car Characteristic"
+  ) +
+  theme_minimal()
 
 p
 
 
 ```
+
+
+A few interesting trends are evident. First, driving characteristics and reliability remain the most commonly-referenced characteristics throughout the period, suggesting that consumers highly value these characteristics. Second, comments regarding a car's technology have steadily increased overtime, from a low of 11\% of reviews in 2002 to roughly 35\% of reviews by 2018. Were the data to cover the present period, I would expect this figure to be even higher. Lastly, references to fuel economy closely mirror long-term oil prices:[^note2] references spiked in 2005-06, following a jump in oil prices to above \$80 per gallon. Oil prices (and references to fuel economy) remained elevated through 2014, whereafter we saw a drop to below \$60 per gallon. 
+
+[^note2]: See [**https://www.macrotrends.net/1369/crude-oil-price-history-chart**](https://www.macrotrends.net/1369/crude-oil-price-history-chart)
+
+According to GPT, 70\% of reviews were positive, 24\% were negative, and 6 \% were neutral. Disaggregating results by positive vs. negative review, a number of interesting patterns emerge: 
+
+
+<!-- 
+The dominance of positive reviews is perhaps a little surprising, since behavioral science would predict unsatisfied customers to be the most vocal, along the lines of angry reddit reviews. 
+-->
+
+
+```{r}
+#| echo: false
+#| warning: false
+
+df.bysentiment.bymonth <- df.coded |>
+  mutate(reviews.month = round_date(Review_Date, "month")) |> # reviews by month-year
+  filter(sentiment != "neutral") |>
+  group_by(reviews.month, sentiment) |>
+  summarise(
+    #mean.Rating = mean(Rating, na.rm=TRUE),
+    #mean.gpt_Rating = mean(gpt_Rating, na.rm=TRUE),
+    mean.reliability = mean(reliability, na.rm=TRUE),
+    #mean.utility = mean(utility, na.rm=TRUE),
+    mean.driving_characteristics = mean(driving, na.rm=TRUE),
+    mean.comfort = mean(comfort, na.rm=TRUE),
+    #mean.interior = mean(interior, na.rm=TRUE),
+    mean.fuel_efficiency = mean(fuel_efficiency, na.rm=TRUE),
+    mean.technology = mean(technology, na.rm=TRUE)
+  ) |> 
+  pivot_longer(
+  cols = starts_with("mean."),  # columns to reshape
+  names_to = "car_characteristic",          # new column name for the variable names
+  names_prefix = "mean.",       # remove prefix from column names
+  values_to = "proportion"            # new column name for the values
+  ) 
+  
+
+ggplot(df.bysentiment.bymonth, aes(x = reviews.month, y = proportion*100, color = car_characteristic)) +
+  geom_smooth(method = "loess", span = .25) +
+  #geom_point() +
+  #facet_grid(~ sentiment) +  # Columns for positive/negative
+  facet_grid(
+    ~ sentiment, 
+    labeller = as_labeller(c("negative" = "Negative Reviews",
+                             "positive" = "Positive Reviews"))  # Apply custom labels
+  ) +
+  labs(
+    x = "Year", 
+    y = "% of Reviews Mentioning Characteristic",
+    color = "Car Characteristic"
+  ) +
+  theme_minimal()
+
+
+```
+
+For negative reviews, by far the most frequent complaint relates to reliability. To a lesser degree, unsatisfied customers complain about faulty technology, or unpleasant driving characteristics. Surprisingly, they don't seem to complain too much about poor fuel economy. For positive reviews, satisfied customers most commonly praise the vehicle's driving characteristics, followed by comfort and reliability. References to technology have increased overtime, but remain subordinate through 2018, the latest year for which data are available. 
+
+
 
 ```{r}
 #| eval: false
@@ -483,6 +546,14 @@ p
 
 
 ## Accuracy of LLM-Assisted Coding
+
+We've coded the data and summarized the results, but how confident should we be in the accuracy of GPT's coding? In real-world applications, the best way to verify the accuracy of LLM-coded data would be to compare LLM-generated codings to a randomly-selected test set human-coded reviews. An appropriate sample size for the test set would be in the range of 50 to 100 randomly-sampled, human-coded reviews.[^samplesizenote] But since this is just a demonstration, we won't go through the process human-coding. Instead, as prime-facie validity test, we can take advantage of the fact that reviewers provided a 0-5 satisfaction rating alongside their review; we can compare this rating to GPT's positive-neutral-negative rating, on the assumption that the sentiment of reviewers' reviews matched their satisfaction ratings. For purposes of this exercise, we'll assume ratings below 2.5 had a negative sentiment, ratings between 2.5 and 3.5 had a neutral sentiment, and ratings above 3.5 had a positive sentiment. 
+
+
+[tbd update to account for the fact that we did indeed prompt gpt to directly coded satisfaction on a scale of 0 to 5.]
+
+[^samplesizenote]: With a sample size of 100, the margin of error for the test error rate for each code/variable would be about 9 percentage points. 
+
 
 ```{r}
 #| warning: false
