@@ -181,7 +181,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#llm-assisted-coding" id="toc-llm-assisted-coding" class="nav-link" data-scroll-target="#llm-assisted-coding">LLM-Assisted Coding</a></li>
   <li><a href="#accuracy-of-llm-assisted-coding" id="toc-accuracy-of-llm-assisted-coding" class="nav-link" data-scroll-target="#accuracy-of-llm-assisted-coding">Accuracy of LLM-Assisted Coding</a></li>
-  <li><a href="#disaggregation" id="toc-disaggregation" class="nav-link" data-scroll-target="#disaggregation">Disaggregation</a></li>
+  <li><a href="#disaggregation-by-automaker-country-region" id="toc-disaggregation-by-automaker-country-region" class="nav-link" data-scroll-target="#disaggregation-by-automaker-country-region">Disaggregation by Automaker Country / Region</a></li>
   </ul>
 </nav>
     </div>
@@ -225,9 +225,14 @@ error   Include errors in the output (note that this implies that errors executi
 include Catch all for preventing any output (code or results) from being included (e.g. include: false suppresses all output from the code block).
 
 -->
+<!-- background citations
+
+https://medium.com/@AnalyticsAtMeta/how-facebook-leverages-large-language-models-to-understand-user-bug-reports-and-guide-fundamental-70ab26475850
+
+ -->
 <section id="intro" class="level2">
 <h2 class="anchored" data-anchor-id="intro">Intro</h2>
-<p>Companies commonly collect unstructured textual data containing insights into consumer preferences and behavior (e.g., customer reviews, feedback surveys, support tickets, or other product feedback channels). Historically, quantifying and analyzing these data has been challenging, in part because traditional topic modeling or natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.</p>
+<p>Companies commonly collect unstructured textual data containing insights into consumer preferences and behavior (e.g., customer reviews, feedback surveys, support tickets, focus group transcripts, or other product feedback channels). Historically, quantifying and analyzing these data has been challenging, in part because traditional topic modeling or natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.</p>
 <p>This page provides a demonstration of the process by which LLMs can be used to code and quantify unstructured textual data. The process involves four steps:</p>
 <ol type="1">
 <li>Define the codes (variables) to be applied to the unstructured textual data.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
@@ -236,7 +241,7 @@ include Catch all for preventing any output (code or results) from being include
 </li>
 <li>Analyze the resulting quantitative data as desired.</li>
 </ol>
-<p>[tbd: brief discussion of extensions and uses cases]</p>
+<!-- explicitly link to qualitative coding process; and benefits over human coding (cost, time, scale); consider adding a discussion of prompt engineering -->
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
@@ -307,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">honda</td>
-<td style="text-align: left;">I Love Honda</td>
-<td style="text-align: left;">i bought my car in April of 2004 with 26,000 miles on it and it is still running strong with 46,000 miles on it. had no major problems yet. i love the 200 hp and sleek design but and i love the Huge trunk you can put anything in there!! all in all it is a perfect car AND I WILL ALWAYS BUY A HONDA</td>
+<td style="text-align: left;">dodge</td>
+<td style="text-align: left;">Perfect new Dakota Styling</td>
+<td style="text-align: left;">Dodge really improved on the body styling for 2005....It's good to see that a reasonably priced truck can look better than what the other automakers are selling....I also had a 2000 Quad Cab 4x4 and never had a problem with it....</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">ford</td>
-<td style="text-align: left;">Ford is terrible</td>
-<td style="text-align: left;">Original transmission replaced at 38,000 miles, replacement transmission had to be replaced at 43,000 miles, then motor broke at 92,000 miles. I will now be junking vehicle, not worth $3,800 repair estimate. Maintenance was performed regularly.</td>
+<td style="text-align: left;">Extreme Disappointment</td>
+<td style="text-align: left;">The Ford 5.4L is woefully underpowered. It is sluggish and is a total dog in the mountains as well as when towing. I do like the interior fit and finish as well as the functionality of the layout.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chevrolet</td>
-<td style="text-align: left;">Love my Purple SS!</td>
-<td style="text-align: left;">Really, you can't go wrong with a car that's got great MPG, is sporty, fun to drive, and good to look at. My husband laughs because it's purple, but off the line and down the road, my Purple SS beat his 2500HD and left it in the dust.</td>
+<td style="text-align: left;">Great Truck</td>
+<td style="text-align: left;">By far the best truck I drove. I have a 5600lb boat and I don't even know its behind me most of the time. Great room inside and more standard features than Dodge or Ford. I LOVE my truck</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ford</td>
-<td style="text-align: left;">Why not?</td>
-<td style="text-align: left;">I have had my used escort for almost one year. This car is a mini-tank, it can climb any incline with out losing speed. Talk about comfort, the seats are like lazy-boy furniture. It might not be a sports car, but it will get you there quick.</td>
+<td style="text-align: left;">lincoln</td>
+<td style="text-align: left;">My Lincoln Ride</td>
+<td style="text-align: left;">I really enjoy my Lincoln. It is the second L S I have Owned. My first was a 2002 LS. The power is great. it is real Quick. I tested a Chrysler 300 hemi It was quick, but did not have the luxury feel of a Lincoln. My choice was the LS.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">toyota</td>
-<td style="text-align: left;">Avalon Is Great</td>
-<td style="text-align: left;">We purchased Avalon new. Only repairs were front brake pads at 80,000 miles, rear brake pads at 87,000 miles. Battery at 7 years and tires at 40,000 and again at 80,000 miles. Rides better than a Cadillac DTS. Always starts in Iowa winter and great handling on snow and ice.</td>
+<td style="text-align: left;">acura</td>
+<td style="text-align: left;">My ride</td>
+<td style="text-align: left;">I have had my Type S for a little over a year now. I love the sound of the engine. This is my second car in my lifetime the first one was an Acura Legend. They know how to make cars.</td>
 </tr>
 </tbody>
 </table>
@@ -355,10 +360,11 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming features, allowing functions to be 
-treated as first-class objects. However, it is primarily known as a statistical
-computing language and has a multi-paradigm approach, incorporating procedural 
-and object-oriented programming as well.</code></pre>
+<pre><code>Yes, R supports functional programming paradigms, allowing functions to be 
+first-class citizens. You can pass functions as arguments, return them from 
+other functions, and create higher-order functions. However, it's also a 
+multi-paradigm language, incorporating procedural and object-oriented 
+programming styles.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -368,7 +374,7 @@ and object-oriented programming as well.</code></pre>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>response_coded <span class="ot">&lt;-</span> <span class="fu">type_object</span>(</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  prompt,</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sentiment =</span> <span class="fu">type_enum</span>(<span class="st">"Extract the sentiment of the review"</span>, <span class="fu">c</span>(<span class="st">"positive"</span>, <span class="st">"neutral"</span>, <span class="st">"negative"</span>)),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">gpt_Rating =</span> <span class="fu">type_number</span>(<span class="st">"Based on this review, how do you think the owner would rate their vehicle? Use a numeric scale from 0 to 5, where 0 is very negative, and 5 is very positive."</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">gpt_Rating =</span> <span class="fu">type_number</span>(<span class="st">"Based on this review, how do you think the owner would rate their vehicle? Use a numeric scale from 1 to 5, where 1 is very negative, and 5 is very positive."</span>),</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">reliability =</span> <span class="fu">type_integer</span>(<span class="st">"1 if the owner references the vehicle's reliability in their review, 0 otherwise"</span>),</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">utility =</span> <span class="fu">type_integer</span>(<span class="st">"1 if the owner references the vehicle's utility features in their review, 0 otherwise"</span>),</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">driving =</span> <span class="fu">type_integer</span>(<span class="st">"1 if the owner references the vehicle's driving characteristics in their review, 0 otherwise"</span>),</span>
@@ -388,7 +394,7 @@ and object-oriented programming as well.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "This is a great luxury car for the \rmoney.  It has all the bells and \rwhistles of a luxury vehicle while \rmaintaining a sporty feel with the 190 \rhp V6.  The car is reliable and fun to \rdriive.  The audio sysem and leather \rseats make for an extremely \rcomfortable ride.  I highly recomend \rthis car for someone who is looking \rfor a good, reliable luxury car with \rgreat performance."</code></pre>
+<pre><code>[1] "I've always wanted a Volvo turbo wagon. When I came across a left over 05 T5 AWD..I decided to take a chance on a non-Japanese made car. After only 3K I'm not sure it was a wise decision. Car developed serious left pull,door hinge squeaked loudly,radio freezes on occasion, hinged door on cargo cover rattles so badly I've simply removed it, armrest storage lid stuck and was replaced, as was the power steering pump..yep. It does drive nicely.Ample power.Good handling.Great in foul weather even w/17\" wheels and stock all-season Pilots.I'm averaging 20.2 MPG. After years of driving Japanese cars and dreaming of owing a Volvo I can only hope this doesn't turn out to be a nightmare."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -398,15 +404,15 @@ and object-oriented programming as well.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "positive"
- $ gpt_Rating     : int 5
+ $ sentiment      : chr "neutral"
+ $ gpt_Rating     : int 3
  $ reliability    : int 1
- $ utility        : int 0
+ $ utility        : int 1
  $ driving        : int 1
- $ comfort        : int 1
+ $ comfort        : int 0
  $ interior       : int 1
- $ fuel_efficiency: int 0
- $ technology     : int 1</code></pre>
+ $ fuel_efficiency: int 1
+ $ technology     : int 0</code></pre>
 </div>
 </div>
 <p>The next step would be to loop through the entire corpus, coding each observation one-by-one. However, with over <span class="math inline">\(206,000\)</span> observations and about 2 seconds for each query to the API, this code would take about 5 days to run. For purposes of this demonstration, we’ll use a sample of <span class="math inline">\(7,000\)</span> randomly sampled observations:</p>
@@ -424,11 +430,11 @@ and object-oriented programming as well.</code></pre>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(result) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Having run the code, we now have a fully-coded sample of 7000 reviews:</p>
+<p>Having run the code, we now have a fully-coded sample of 8000 reviews:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 7,000
-Columns: 10
+<pre><code>Rows: 8,000
+Columns: 11
 $ index           &lt;dbl&gt; 62, 183, 230, 251, 281, 308, 312, 340, 396, 454, 475, …
 $ sentiment       &lt;chr&gt; "positive", "negative", "neutral", "negative", "positi…
 $ gpt_Rating      &lt;dbl&gt; 5, 1, 3, 1, 5, 5, 4, 5, 1, 1, 4, 2, 5, 4, 5, 4, 1, 1, …
@@ -438,7 +444,8 @@ $ driving         &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1,
 $ comfort         &lt;dbl&gt; 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, …
 $ interior        &lt;dbl&gt; 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, …
 $ fuel_efficiency &lt;dbl&gt; 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, …
-$ technology      &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, …</code></pre>
+$ technology      &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, …
+$ batch           &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</code></pre>
 </div>
 </div>
 <p>Which we can then visualize as follows:</p>
@@ -500,111 +507,47 @@ The dominance of positive reviews is perhaps a little surprising, since behavior
 </section>
 <section id="accuracy-of-llm-assisted-coding" class="level2">
 <h2 class="anchored" data-anchor-id="accuracy-of-llm-assisted-coding">Accuracy of LLM-Assisted Coding</h2>
-<p>We’ve coded the data and summarized the results, but how confident should we be in the accuracy of GPT’s coding? In real-world applications, the best way to verify the accuracy of LLM-coded data would be to compare LLM-generated codings to a randomly-selected test set human-coded reviews. An appropriate sample size for the test set would be in the range of 50 to 100 randomly-sampled, human-coded reviews.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> But since this is just a demonstration, we won’t go through the process human-coding. Instead, as prime-facie validity test, we can take advantage of the fact that reviewers provided a 0-5 satisfaction rating alongside their review; we can compare this rating to GPT’s positive-neutral-negative rating, on the assumption that the sentiment of reviewers’ reviews matched their satisfaction ratings. For purposes of this exercise, we’ll assume ratings below 2.5 had a negative sentiment, ratings between 2.5 and 3.5 had a neutral sentiment, and ratings above 3.5 had a positive sentiment.</p>
-<p>[tbd update to account for the fact that we did indeed prompt gpt to directly coded satisfaction on a scale of 0 to 5.]</p>
+<p>We’ve coded the data and summarized the results, but how confident should we be in the accuracy of GPT’s coding? In a real-world application, the best way to verify the accuracy of LLM-coded data would be to compare LLM-generated codings to a small, randomly-selected test set of human-coded reviews.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> But since this is just a demonstration, we won’t go through the process human-coding. Instead, as prime-facie validity test, we can take advantage of the fact that reviewers provided a 1 to 5 satisfaction rating alongside their review, which we can compare to GPT’s predicted customer satisfaction based on its reading of the review.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> (This test is actually a little unfair to GPT, since customers’ overall ratings may have differed from the focus or topic of their review.)</p>
+<p>The root mean-squared error (RMSE)<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> for the GPT-generated ratings is 1.1, which suggests that on average, GPT’s rating was within 1.1 points (‘stars’) of the customer’s rating.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>GPT_Rating <span class="ot">&lt;-</span> df<span class="sc">$</span>Rating <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(df<span class="sc">$</span>Rating),<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate rmse</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># linear trend + confidence interval</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>Rating, <span class="at">y=</span>GPT_Rating)) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm , <span class="at">color=</span><span class="st">"red"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>, <span class="at">se=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>()</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="llm-assisted-text-analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix approach</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the bin breaks and labels</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>bin_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">2.5</span>, <span class="fl">3.5</span>, <span class="dv">5</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>bin_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Negative"</span>, <span class="st">"Neutral"</span>, <span class="st">"Positive"</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Use cut() to bin the Rating variable</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rating_cat =</span> <span class="fu">cut</span>(Rating, <span class="at">breaks =</span> bin_breaks, <span class="at">labels =</span> bin_labels, <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Example data: Actual and predicted classes</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>))</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>, <span class="st">"Class3"</span>, <span class="st">"Class1"</span>))</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure both actual and predicted have the same levels (classes)</span></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(actual) <span class="ot">&lt;-</span> <span class="fu">levels</span>(predicted) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Class1"</span>, <span class="st">"Class2"</span>, <span class="st">"Class3"</span>)</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix</span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(predicted, actual)</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the confusion matrix</span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(conf_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((df.coded<span class="sc">$</span>Rating <span class="sc">-</span> df.coded<span class="sc">$</span>gpt_Rating) <span class="sc">^</span> <span class="dv">2</span>))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(rmse, <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Confusion Matrix and Statistics
-
-          Reference
-Prediction Class1 Class2 Class3
-    Class1      2      0      1
-    Class2      0      2      1
-    Class3      1      1      1
-
-Overall Statistics
-                                        
-               Accuracy : 0.5556        
-                 95% CI : (0.212, 0.863)
-    No Information Rate : 0.3333        
-    P-Value [Acc &gt; NIR] : 0.1448        
-                                        
-                  Kappa : 0.3333        
-                                        
- Mcnemar's Test P-Value : NA            
-
-Statistics by Class:
-
-                     Class: Class1 Class: Class2 Class: Class3
-Sensitivity                 0.6667        0.6667        0.3333
-Specificity                 0.8333        0.8333        0.6667
-Pos Pred Value              0.6667        0.6667        0.3333
-Neg Pred Value              0.8333        0.8333        0.6667
-Prevalence                  0.3333        0.3333        0.3333
-Detection Rate              0.2222        0.2222        0.1111
-Detection Prevalence        0.3333        0.3333        0.3333
-Balanced Accuracy           0.7500        0.7500        0.5000</code></pre>
+<pre><code>[1] 1.13</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert confusion matrix to a data frame</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>conf_matrix_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(conf_matrix<span class="sc">$</span>table)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the confusion matrix</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(conf_matrix_df, <span class="fu">aes</span>(<span class="at">x =</span> Reference, <span class="at">y =</span> Prediction, <span class="at">fill =</span> Freq)) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Freq), <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"lightblue"</span>, <span class="at">high =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Confusion Matrix"</span>,</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Actual"</span>,</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted"</span>) <span class="sc">+</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can also visualize the correspondence as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize correlation bt original rating and gpt rating</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df.coded, <span class="fu">aes</span>(<span class="at">x=</span>Rating, <span class="at">y=</span>gpt_Rating)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>, <span class="at">color =</span> <span class="st">"#69b3a2"</span>) <span class="sc">+</span>  <span class="co"># Adjust width and height as needed</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"loess"</span> , <span class="at">color=</span><span class="st">"red"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>, <span class="at">se=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="llm-assisted-text-analysis_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="llm-assisted-text-analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="disaggregation" class="level2">
-<h2 class="anchored" data-anchor-id="disaggregation">Disaggregation</h2>
-<p>results by American, European, Japanesse, and South Korean automakers</p>
+<section id="disaggregation-by-automaker-country-region" class="level2">
+<h2 class="anchored" data-anchor-id="disaggregation-by-automaker-country-region">Disaggregation by Automaker Country / Region</h2>
+<p>Results by American, European, Japanesse, and South Korean automakers:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="llm-assisted-text-analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -615,7 +558,9 @@ Balanced Accuracy           0.7500        0.7500        0.5000</code></pre>
 <ol>
 <li id="fn1"><p>Another option is to prompt the LLM to identify major themes or topics in sub-sample of unstructured text responses. The analyst can then use these topics as the basis for the codes that will be applied to the full corpus.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>See <a href="https://www.macrotrends.net/1369/crude-oil-price-history-chart"><strong>https://www.macrotrends.net/1369/crude-oil-price-history-chart</strong></a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>With a sample size of 100, the margin of error for the test error rate for each code/variable would be about 9 percentage points.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>An reasonable sample size for the test set would be in the range of 100 randomly-sampled, human-coded reviews. With a sample size of 100, the margin of error for the test error rate for each code/variable would be about 9 percentage points.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Recall that GPT was given the following prompt to generate its satisfaction rating: ``Based on this review, how do you think the owner would rate their vehicle? Use a numeric scale from 1 to 5, where 1 is very negative, and 5 is very positive.”<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>The RMSE is calculated as: <span class="math inline">\(RMSE = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (OriginalRating_i - \hat{GPTRating}_i)^2 }\)</span>. RMSE is a go-to metric used for measuring performance in predictive inference.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
