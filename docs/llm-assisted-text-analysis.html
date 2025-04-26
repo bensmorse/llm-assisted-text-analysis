@@ -179,7 +179,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#descriptives" id="toc-descriptives" class="nav-link" data-scroll-target="#descriptives">Descriptives</a></li>
   </ul></li>
-  <li><a href="#llm-assisted-coding" id="toc-llm-assisted-coding" class="nav-link" data-scroll-target="#llm-assisted-coding">LLM-Assisted Coding</a></li>
+  <li><a href="#llm-assisted-classification" id="toc-llm-assisted-classification" class="nav-link" data-scroll-target="#llm-assisted-classification">LLM-Assisted Classification</a></li>
   <li><a href="#accuracy-of-llm-assisted-coding" id="toc-accuracy-of-llm-assisted-coding" class="nav-link" data-scroll-target="#accuracy-of-llm-assisted-coding">Accuracy of LLM-Assisted Coding</a></li>
   <li><a href="#disaggregation-by-automaker-country-region" id="toc-disaggregation-by-automaker-country-region" class="nav-link" data-scroll-target="#disaggregation-by-automaker-country-region">Disaggregation by Automaker Country / Region</a></li>
   </ul>
@@ -232,10 +232,10 @@ https://medium.com/@AnalyticsAtMeta/how-facebook-leverages-large-language-models
  -->
 <section id="intro" class="level2">
 <h2 class="anchored" data-anchor-id="intro">Intro</h2>
-<p>Companies commonly collect unstructured textual data containing insights into consumer preferences and behavior (e.g., customer reviews, feedback surveys, support tickets, focus group transcripts, or other product feedback channels). Historically, quantifying and analyzing these data has been challenging, in part because traditional topic modeling or natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.</p>
+<p>Companies commonly collect unstructured textual data containing insights into consumer preferences and behavior. Common examples include customer reviews, feedback surveys, support tickets, or transcripts from focus groups. Historically, coding and analyzing these data has been challenging, in part because traditional topic modeling or natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.</p>
 <p>This page provides a demonstration of the process by which LLMs can be used to code and quantify unstructured textual data. The process involves four steps:</p>
 <ol type="1">
-<li>Define the codes (variables) to be applied to the unstructured textual data.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>Define the codes (variables) that will be used to classify the unstructured textual data.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
 <li>Using your preferred LLM’s API, submit the unstructured textual data to the LLM alongside prompts for each code. Specify that results be returned in JSON format.</li>
 <li>Validate the accuracy of the resulting LLM-coded output against a small subset of human-coded observations. If necessary, refine the prompts and/or codes and repeat steps 1-3 until an acceptable accuracy level is reached.<br>
 </li>
@@ -245,7 +245,7 @@ https://medium.com/@AnalyticsAtMeta/how-facebook-leverages-large-language-models
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>We’ll use data on car reviews scrapped from <a href="www.edmunds.com">Edmunds.com</a> and made publicly available on <a href="www.kaggle.com">Kaggle</a>. For each review, the dataset provides the date, vehicle brand, review text and title, and the customer’s overall satisfaction rating on a scale of 0 to 5 for. The data cover approximately 206,000 reviews submitted between 2004 and 2018. The goal is to code the sentiment of each review (setting aside for time being thatalready have the reviewer’s numeric satisfaction rating), as well as various metrics that we might be interested in tracking overtime, such as whether the reviewer references the vehicle’s reliability, safety, drive characteristics, or other variables of interest.</p>
+<p>We’ll use data on car reviews scrapped from <a href="www.edmunds.com">Edmunds.com</a> and made publicly available on <a href="www.kaggle.com">Kaggle</a>. For each review, we have data on the date the review was submitted, vehicle brand, review text and title, and the customer’s overall satisfaction rating on a scale of 0 to 5 for. The data cover approximately 206,000 reviews submitted between 2004 and 2018. The goal is to code the sentiment of each review (setting aside for time being that we already have reviewers’ numeric satisfaction rating), as well as various metrics that we might be interested in tracking overtime, such as whether the reviewer references the vehicle’s reliability, safety, drive characteristics, or other variables of interest.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -296,8 +296,8 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </div>
 </section>
 </section>
-<section id="llm-assisted-coding" class="level2">
-<h2 class="anchored" data-anchor-id="llm-assisted-coding">LLM-Assisted Coding</h2>
+<section id="llm-assisted-classification" class="level2">
+<h2 class="anchored" data-anchor-id="llm-assisted-classification">LLM-Assisted Classification</h2>
 <p>First, let’s familiarize ourself with the type of data we’ll be classifying. Here’s a random sample of five reviews:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">dodge</td>
-<td style="text-align: left;">Perfect new Dakota Styling</td>
-<td style="text-align: left;">Dodge really improved on the body styling for 2005....It's good to see that a reasonably priced truck can look better than what the other automakers are selling....I also had a 2000 Quad Cab 4x4 and never had a problem with it....</td>
+<td style="text-align: left;">mini</td>
+<td style="text-align: left;">New Owner</td>
+<td style="text-align: left;">I drove it for two days in the West Virginia mountains using the paddel shifter. It was a blast. The only change I would make is an electric adjustable drivers seat. It is a great car, but it is not as much fun as my 1990 British Open Mini. Everyone should have one.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ford</td>
-<td style="text-align: left;">Extreme Disappointment</td>
-<td style="text-align: left;">The Ford 5.4L is woefully underpowered. It is sluggish and is a total dog in the mountains as well as when towing. I do like the interior fit and finish as well as the functionality of the layout.</td>
+<td style="text-align: left;">chevrolet</td>
+<td style="text-align: left;">Big Truck Like a Rock</td>
+<td style="text-align: left;">Solid truck with lots of power. This baby is great and I look good in it. I fly F16's for a living and drive Chevy's when not airborne. The Duramax is unbelievable, tows the trailer like it isnt there. Go buy one.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">buick</td>
+<td style="text-align: left;">Maintain your Buick !!!</td>
+<td style="text-align: left;">My 2004 Buick has 168000 miles on it. I've replace the right front hup, put two sensors on it and it will pass inspection tomorrow. Flush the transmission at 100,000 miles keep the oil changed sooner than the book says, keep the tires in check. Best driving, riding SUV I've ever drove.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">kia</td>
+<td style="text-align: left;">What a Mistake</td>
+<td style="text-align: left;">I like that way this car handles and that is what sold me. The repair problems have made me decide to get rid of this car after having had it only 10 months. It seems like it's hard to keep ahead of it falling apart. I have never had the misfortune to have ever gotten a car like this before.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chevrolet</td>
-<td style="text-align: left;">Great Truck</td>
-<td style="text-align: left;">By far the best truck I drove. I have a 5600lb boat and I don't even know its behind me most of the time. Great room inside and more standard features than Dodge or Ford. I LOVE my truck</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">lincoln</td>
-<td style="text-align: left;">My Lincoln Ride</td>
-<td style="text-align: left;">I really enjoy my Lincoln. It is the second L S I have Owned. My first was a 2002 LS. The power is great. it is real Quick. I tested a Chrysler 300 hemi It was quick, but did not have the luxury feel of a Lincoln. My choice was the LS.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">acura</td>
-<td style="text-align: left;">My ride</td>
-<td style="text-align: left;">I have had my Type S for a little over a year now. I love the sound of the engine. This is my second car in my lifetime the first one was an Acura Legend. They know how to make cars.</td>
+<td style="text-align: left;">2009 beige cobalt</td>
+<td style="text-align: left;">Fun to drive, 30000 miles, mechanical problems, turn signal wouldn't shut off, now "something " is draining the battery, in shop for diagnosis. could not locate fob for above mentioned car</td>
 </tr>
 </tbody>
 </table>
@@ -345,7 +345,7 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 <!--
 We'll use the @ellmer package to code the data. 
 -->
-<p>We’ll use the <a href="https://ellmer.tidyverse.org/"><strong>ellmer</strong></a> package to code the data. ellmer supports a wide variety of LLM providers; for now, we’ll use OpenAI’s GPT-4o model.</p>
+<p>We’ll use the <a href="https://ellmer.tidyverse.org/"><strong>ellmer</strong></a> package to code the data. <a href="https://ellmer.tidyverse.org/"><strong>ellmer</strong></a> supports a wide variety of LLM providers; for now, we’ll use OpenAI’s GPT-4o model.</p>
 <!--
 Note: for first time, need to add your open_api_ai key as an environmental variable. To edit your environment, open Renvirion via: usethis::edit_r_environ()
 -->
@@ -361,10 +361,9 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Yes, R supports functional programming paradigms, allowing functions to be 
-first-class citizens. You can pass functions as arguments, return them from 
-other functions, and create higher-order functions. However, it's also a 
-multi-paradigm language, incorporating procedural and object-oriented 
-programming styles.</code></pre>
+first-class citizens. You can create, pass, and return functions, and it 
+includes features like higher-order functions and closures. However, it also 
+supports object-oriented and procedural programming styles.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -394,7 +393,7 @@ programming styles.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "I've always wanted a Volvo turbo wagon. When I came across a left over 05 T5 AWD..I decided to take a chance on a non-Japanese made car. After only 3K I'm not sure it was a wise decision. Car developed serious left pull,door hinge squeaked loudly,radio freezes on occasion, hinged door on cargo cover rattles so badly I've simply removed it, armrest storage lid stuck and was replaced, as was the power steering pump..yep. It does drive nicely.Ample power.Good handling.Great in foul weather even w/17\" wheels and stock all-season Pilots.I'm averaging 20.2 MPG. After years of driving Japanese cars and dreaming of owing a Volvo I can only hope this doesn't turn out to be a nightmare."</code></pre>
+<pre><code>[1] "I bought the car in 2002 with 82,000 \rmiles on it. It now has 122,000 miles \rand is still tight and reliable. Other \rthan brakes, tires, and oil changes \rthis car has been nearly trouble free. \rI did have to replace the driver's side \relectric window motor."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -404,14 +403,14 @@ programming styles.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "neutral"
- $ gpt_Rating     : int 3
+ $ sentiment      : chr "positive"
+ $ gpt_Rating     : num 4.5
  $ reliability    : int 1
- $ utility        : int 1
- $ driving        : int 1
+ $ utility        : int 0
+ $ driving        : int 0
  $ comfort        : int 0
- $ interior       : int 1
- $ fuel_efficiency: int 1
+ $ interior       : int 0
+ $ fuel_efficiency: int 0
  $ technology     : int 0</code></pre>
 </div>
 </div>

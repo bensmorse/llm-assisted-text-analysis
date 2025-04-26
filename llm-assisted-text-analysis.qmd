@@ -33,11 +33,11 @@ https://medium.com/@AnalyticsAtMeta/how-facebook-leverages-large-language-models
 
 ## Intro
 
-Companies commonly collect unstructured textual data containing insights into consumer preferences and behavior (e.g., customer reviews, feedback surveys, support tickets, focus group transcripts, or other product feedback channels). Historically, quantifying and analyzing these data has been challenging, in part because traditional topic modeling or natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.
+Companies commonly collect unstructured textual data containing insights into consumer preferences and behavior. Common examples include customer reviews, feedback surveys, support tickets, or transcripts from focus groups. Historically, coding and analyzing these data has been challenging, in part because traditional topic modeling or natural language processing methods are complex, opaque, and not always insightful. The advent of LLMs, however, has dramatically simplified the process of analyzing unstructured text and improved the quality of the resulting output.
 
 This page provides a demonstration of the process by which LLMs can be used to code and quantify unstructured textual data. The process involves four steps:
 
-1. Define the codes (variables) to be applied to the unstructured textual data.[^note1]
+1. Define the codes (variables) that will be used to classify the unstructured textual data.[^note1]
 2. Using your preferred LLM's API, submit the unstructured textual data to the LLM alongside prompts for each code. Specify that results be returned in JSON format.
 3. Validate the accuracy of the resulting LLM-coded output against a small subset of human-coded observations. If necessary, refine the prompts and/or codes and repeat steps 1-3 until an acceptable accuracy level is reached.  
 4. Analyze the resulting quantitative data as desired. 
@@ -158,7 +158,7 @@ save(df, file = "data\\car_reviews.RData")
 
 ## Data
 
-We'll use data on car reviews scrapped from [Edmunds.com](www.edmunds.com) and made publicly available on [Kaggle](www.kaggle.com). For each review, the dataset provides the date, vehicle brand, review text and title, and the customer's overall satisfaction rating on a scale of 0 to 5 for. The data cover approximately 206,000 reviews submitted between 2004 and 2018. The goal is to code the sentiment of each review (setting aside for time being thatalready have the reviewer's numeric satisfaction rating), as well as various metrics that we might be interested in tracking overtime, such as whether the reviewer references the vehicle's reliability, safety, drive characteristics, or other variables of interest.  
+We'll use data on car reviews scrapped from [Edmunds.com](www.edmunds.com) and made publicly available on [Kaggle](www.kaggle.com). For each review, we have data on the date the review was submitted, vehicle brand, review text and title, and the customer's overall satisfaction rating on a scale of 0 to 5 for. The data cover approximately 206,000 reviews submitted between 2004 and 2018. The goal is to code the sentiment of each review (setting aside for time being that we already have reviewers' numeric satisfaction rating), as well as various metrics that we might be interested in tracking overtime, such as whether the reviewer references the vehicle's reliability, safety, drive characteristics, or other variables of interest.  
 
 
 ```{r}
@@ -205,7 +205,7 @@ p
 ```
 
 
-## LLM-Assisted Coding
+## LLM-Assisted Classification
 
 First, let's familiarize ourself with the type of data we'll be classifying. Here's a random sample of five reviews: 
 
@@ -233,7 +233,7 @@ We'll use the @ellmer package to code the data.
 
 \vspace{1em}
 
-We'll use the [**ellmer**](https://ellmer.tidyverse.org/) package to code the data. ellmer supports a wide variety of LLM providers; for now, we'll use OpenAI's GPT-4o model. 
+We'll use the [**ellmer**](https://ellmer.tidyverse.org/) package to code the data. [**ellmer**](https://ellmer.tidyverse.org/) supports a wide variety of LLM providers; for now, we'll use OpenAI's GPT-4o model. 
 
 <!--
 Note: for first time, need to add your open_api_ai key as an environmental variable. To edit your environment, open Renvirion via: usethis::edit_r_environ()
