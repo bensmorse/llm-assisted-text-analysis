@@ -561,7 +561,7 @@ For negative reviews, by far the most frequent complaint relates to reliability.
 
 
 
-## Accuracy of LLM-Assisted Coding
+## Accuracy of LLM-Assisted Classification
 
 We've coded the data and summarized the results, but how confident should we be in the accuracy of GPT's coding? In a real-world application, the best way to verify the accuracy of LLM-coded data would be to compare LLM-generated codings to a small, randomly-selected test set of human-coded reviews.[^samplesizenote] But since this is just a demonstration, we won't go through the process human-coding. Instead, as prime-facie validity test, we can take advantage of the fact that reviewers provided a 1 to 5 satisfaction rating alongside their review, which we can compare to GPT's predicted customer satisfaction based on its reading of the review.[^ratingnote] (This test is actually a little unfair to GPT, since customers' overall ratings may have differed from the focus or topic of their review.)
 
