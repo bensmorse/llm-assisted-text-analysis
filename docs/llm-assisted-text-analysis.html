@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">volvo</td>
-<td style="text-align: left;">Great family car</td>
-<td style="text-align: left;">Excellent family car with high reliability and decent curb appeal. I've had no major mechanical problems over a three year period, and the car still drives like new. Engine performance, ride and handling feel like new.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">gmc</td>
-<td style="text-align: left;">Diamond in the rough</td>
-<td style="text-align: left;">Overall, the Jimmy is a good SUV. The main problem encountered with the car was front end repairs and numerous brake replacements. Good performance and average comfort. For the money not a bad buy.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">acura</td>
-<td style="text-align: left;">Sporty yet practical</td>
-<td style="text-align: left;">I love my 3.2TL. I am a Stay-at-home Mom with 1 child and feel like I am not compromising the Sport feel with too much practicality. Very peppy drive. Great Luxury vehicle for the $$.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">acura</td>
-<td style="text-align: left;">A very good car</td>
-<td style="text-align: left;">This is a very good car. Good looking and reliable. I have this car for almost 5 years now and not a major problem occurs. It is not a performance car but it can run pretty quick. The handling is great. For everyday use, this is a perfect car.</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">dodge</td>
-<td style="text-align: left;">Love that turbo-diesel</td>
-<td style="text-align: left;">Power and mileage are excellent. I can tow my Bronco with a full size camper in the bed, far more cheaply and much faster; than I can drive the Bronco by itself</td>
+<td style="text-align: left;">2003 Dakota SXT</td>
+<td style="text-align: left;">Great truck. Had over three years with no problems in 28,900 miles. Original brakes and tires. Decent gas mileage for a 2WD, approximately 19-21 MPG on the highway.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">audi</td>
+<td style="text-align: left;">Audi Rocks</td>
+<td style="text-align: left;">Replaced my 2008 Honda Pilot. I had leased A4 in 2005 and was very happy with Audi as a brand. Great car/SUV. Love it, of course smaller than Honda Pilot but works for me.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">infiniti</td>
+<td style="text-align: left;">Best SUV Out There</td>
+<td style="text-align: left;">The title speaks for itself. I bought the QX56 for my lead-footed wife and she loves it so much she may just keep it (unlike the other 3 SUV's in the last 5 years). She has not one single complaint. Maybe I'll surprise her and buy her a new one if there is a re- design.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">kia</td>
+<td style="text-align: left;">great</td>
+<td style="text-align: left;">bought new in 2002, even though i try not to buy the first model year for any vehicle.my mileage has been a consistent 28 mpg hwy with 6 large people and luggage.plenty of power.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">volkswagen</td>
+<td style="text-align: left;">Lemon</td>
+<td style="text-align: left;">Have had numerous problems for one year - delivered without enough transmission fluid - not alligned - resulted in requireing new tires - cruise control worked intermittantly - ABS light on - Engine Check Light on - cannot trust safety driving - stopped when engine check light on</td>
 </tr>
 </tbody>
 </table>
@@ -360,10 +360,11 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming. It allows functions to be treated as 
-first-class objects, enabling features like higher-order functions, closures, 
-and anonymous functions. However, R also supports procedural and 
-object-oriented programming styles.</code></pre>
+<pre><code>Yes, R supports functional programming concepts. It allows functions to be 
+first-class objects, enabling functions to be passed as arguments, returned 
+from other functions, and assigned to variables. However, R is also a 
+multi-paradigm language, incorporating procedural and object-oriented 
+programming styles.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -393,7 +394,7 @@ object-oriented programming styles.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "I am the original owner of this car. It now has about 155,000 miles. Had to replace the head gasket at 89,000 miles. Was not a happy camper, but its been running OK since then. A few quirky problems, mostly with sensors and brakes, but once they are replaced, it seems fine. I will probably be replacing it within a year, and I don't think I will buy another Subaru, but I can't honestly think of a more affordable AWD vehicle with as much room as it has. Hopefully Subaru has improved its quality a bit since 98."</code></pre>
+<pre><code>[1] "Best sedan i'ver ever owned. Powerful, \rcomfortable and reliable. Loaded with \rfeatures. Easy to drive. Classic \rstyling. No mechanical problems. \rSurprisingly good fuel economy."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -403,15 +404,15 @@ object-oriented programming styles.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "neutral"
- $ gpt_Rating     : int 3
+ $ sentiment      : chr "positive"
+ $ gpt_Rating     : int 5
  $ reliability    : int 1
- $ utility        : int 0
- $ driving        : int 0
+ $ utility        : int 1
+ $ driving        : int 1
  $ comfort        : int 1
  $ interior       : int 1
- $ fuel_efficiency: int 0
- $ technology     : int 0</code></pre>
+ $ fuel_efficiency: int 1
+ $ technology     : int 1</code></pre>
 </div>
 </div>
 <p>The next step would be to loop through the entire corpus, coding each observation one-by-one. However, with over <span class="math inline">\(206,000\)</span> observations and about 2 seconds for each query to the API, this code would take about 5 days to run. For purposes of this demonstration, we’ll use a sample of <span class="math inline">\(7,000\)</span> randomly sampled observations:</p>
