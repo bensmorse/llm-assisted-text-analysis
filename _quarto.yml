@@ -6,6 +6,8 @@ website:
   title: ""
   navbar:
     left:
+      - href: index.qmd
+        text: "Home"
       - llm-assisted-text-analysis.qmd
 
 format:
