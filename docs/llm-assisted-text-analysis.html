@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">infiniti</td>
-<td style="text-align: left;">Best SUV Out There</td>
-<td style="text-align: left;">The title speaks for itself. I bought the QX56 for my lead-footed wife and she loves it so much she may just keep it (unlike the other 3 SUV's in the last 5 years). She has not one single complaint. Maybe I'll surprise her and buy her a new one if there is a re- design.</td>
+<td style="text-align: left;">volkswagen</td>
+<td style="text-align: left;">2003 Volkswagen GLX Turbo Coupe (Betty)</td>
+<td style="text-align: left;">We bought this car when a car of ours was stolen. It has been a really fun and reliable form of transportation. We are planning on keeping it in the family, since it has been so reliable. I would recommend this car and would make the same purchase again.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">dodge</td>
-<td style="text-align: left;">You can drive of look at perfection</td>
-<td style="text-align: left;">This is as close as you will get to perfection from an auto manufacturer. This is a 3500 Turbo 5.7L Diesel working machine. To drive this beast you would never know your driving such a truck or you can soon forget your are hauling anything. This, I would say is the only bad quality.</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">lexus</td>
-<td style="text-align: left;">awesome from day one!</td>
-<td style="text-align: left;">I traded my soon to be out of warranty 07 CLS63 for my 2012 F sport.45-49 mpg mostly in the sport mode mixed city/hiway driving.I debadged my hottie including the blue L,,,don't want to be mistaken for a Greeny....no one knows what it is, lots of thumbs up,you would get that responce in a Prius!!!</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">mazda</td>
-<td style="text-align: left;">Best car ever!</td>
-<td style="text-align: left;">I bought this car brand new 8 years ago and I can honestly say it has been the best car I've ever owned! Thus far the only things we've had to change on it have been the brakes and of course the tires. Anyway, great first time car for anyone! I will be trading up soon for a small SUV.</td>
+<td style="text-align: left;">Smooth ride</td>
+<td style="text-align: left;">The car drives smooth. Which is how it is designed for. I bought the car for comfort but it has great acceleration especially if you use the sport mode.</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">mazda</td>
+<td style="text-align: left;">Great car, horrible dealership</td>
+<td style="text-align: left;">Car handles absolutely awesome compared to my Lexus SC300. Not powerful at all, but the fun factor makes up for it. It's decently comfortable and roomy inside.</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">ford</td>
-<td style="text-align: left;">Great Truck</td>
-<td style="text-align: left;">Have had the vehicle for seven months and have 15,000 miles to date. Fantastic comfort, incredible towing, great capacity . . . the perfect truck for any situation.</td>
+<td style="text-align: left;">truly american</td>
+<td style="text-align: left;">This car is absolutely a great ride. For the price, you get everything from leather to power. I paid $11000 less for this mustang than my brother did for his G35 Coupe 6MT and the mustang is still faster.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">honda</td>
+<td style="text-align: left;">Nothing is perfect, but Honda is close.</td>
+<td style="text-align: left;">Owned this vehicle for a year, use it for work pulling a trailer. Fantastic. I think the mileage is reasonable for an AWD truck. I average 16 city/20-21 hwy and about 14-15 when pulling a trailer, and it pulls a trailer sweet. Thanks Honda.</td>
 </tr>
 </tbody>
 </table>
@@ -360,11 +360,10 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming features, such as first-class functions,
-higher-order functions, and the ability to use functions as arguments or return
-values. However, it's primarily a language for statistical computing and data 
-analysis, so it incorporates both procedural and object-oriented programming 
-paradigms as well.</code></pre>
+<pre><code>Yes, R supports functional programming concepts. It allows functions to be 
+treated as first-class objects, enabling higher-order functions and the use of 
+anonymous functions. However, R is primarily a multi-paradigm language, 
+combining object-oriented, procedural, and functional programming styles.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -394,7 +393,7 @@ paradigms as well.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "This car is a lemon.  Avoid it at all costs.\r At 40k the transmission leaked.  50k miles, head gasket failed.  54k the engine leaked oil again.  57k the valve cover gasket leaked.  \r This car is poorly assembled."</code></pre>
+<pre><code>[1] "I have a 4 cyl 6 speed tiptronic Turbo Passat SW and love it!  It gets great gas mileage around 35 miles to a gallon, and when it shifts it's so smooth you can't feel it.  American carmakers are now discovering the tiptronic but putting them with 6 cyl cars.  Unless you're towing something you don't need an engine that big."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -404,15 +403,15 @@ paradigms as well.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "negative"
- $ gpt_Rating     : int 1
- $ reliability    : int 1
- $ utility        : int 0
- $ driving        : int 0
+ $ sentiment      : chr "positive"
+ $ gpt_Rating     : int 4
+ $ reliability    : int 0
+ $ utility        : int 1
+ $ driving        : int 1
  $ comfort        : int 0
  $ interior       : int 0
- $ fuel_efficiency: int 0
- $ technology     : int 0</code></pre>
+ $ fuel_efficiency: int 1
+ $ technology     : int 1</code></pre>
 </div>
 </div>
 <p>The next step would be to loop through the entire corpus, coding each observation one-by-one. However, with over <span class="math inline">\(206,000\)</span> observations and about 2 seconds for each query to the API, this code would take about 5 days to run. For purposes of this demonstration, we’ll use a sample of <span class="math inline">\(7,000\)</span> randomly sampled observations:</p>
