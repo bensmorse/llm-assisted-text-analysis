@@ -151,6 +151,10 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="./llm-assisted-text-analysis.html" aria-current="page"> 
 <span class="menu-text">LLM-Assisted Analysis of Open-Ended Text</span></a>
   </li>  
@@ -308,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">toyota</td>
-<td style="text-align: left;">great car</td>
-<td style="text-align: left;">The performance of this car is great. Driving mountain roads in California it really feels solid. There are no unpleasant surprises in the handling that I've encountered.</td>
+<td style="text-align: left;">infiniti</td>
+<td style="text-align: left;">Best SUV Out There</td>
+<td style="text-align: left;">The title speaks for itself. I bought the QX56 for my lead-footed wife and she loves it so much she may just keep it (unlike the other 3 SUV's in the last 5 years). She has not one single complaint. Maybe I'll surprise her and buy her a new one if there is a re- design.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">lincoln</td>
-<td style="text-align: left;">What's not to like!</td>
-<td style="text-align: left;">We bought our 1999 Continental about 2 years ago for $7,500. Low mileage on the car when we bought it. We've had no trouble with the car at all. Good power, nice-looking, decent gas mileage, large trunk, comfortable for 5, just the right size.</td>
+<td style="text-align: left;">dodge</td>
+<td style="text-align: left;">You can drive of look at perfection</td>
+<td style="text-align: left;">This is as close as you will get to perfection from an auto manufacturer. This is a 3500 Turbo 5.7L Diesel working machine. To drive this beast you would never know your driving such a truck or you can soon forget your are hauling anything. This, I would say is the only bad quality.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">dodge</td>
-<td style="text-align: left;">Drives Great</td>
-<td style="text-align: left;">Bought this car about six month ago. Replaced brakes, very easy due to four disc brakes instead of rear drums. Having to change tires. It is super clean under the hood. Bought at 112K, have 122K on it now. Haven't changed oil in 4K and it is still super clean</td>
+<td style="text-align: left;">lexus</td>
+<td style="text-align: left;">awesome from day one!</td>
+<td style="text-align: left;">I traded my soon to be out of warranty 07 CLS63 for my 2012 F sport.45-49 mpg mostly in the sport mode mixed city/hiway driving.I debadged my hottie including the blue L,,,don't want to be mistaken for a Greeny....no one knows what it is, lots of thumbs up,you would get that responce in a Prius!!!</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">volkswagen</td>
-<td style="text-align: left;">Excellent Car For Around $25K -</td>
-<td style="text-align: left;">We considered the Prius, the Fusion and the Audi A3.. This car was the best choice by far. Very well made, great low end performance, great mileage, plus driving the car makes me smile. Much better value then the Audi A3 and the performance leaves the Toyota and Ford in the dust.</td>
+<td style="text-align: left;">mazda</td>
+<td style="text-align: left;">Best car ever!</td>
+<td style="text-align: left;">I bought this car brand new 8 years ago and I can honestly say it has been the best car I've ever owned! Thus far the only things we've had to change on it have been the brakes and of course the tires. Anyway, great first time car for anyone! I will be trading up soon for a small SUV.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ford</td>
-<td style="text-align: left;">So far... so good!</td>
-<td style="text-align: left;">Went from an Acura Sedan to the Escape because I really wanted a 4 wheel drive. Definitely fun to drive and I love sitting high up now! Husband complains about the hard leather but I think it's pretty comfy. I finally am looking forward to a good snow storm!</td>
+<td style="text-align: left;">Great Truck</td>
+<td style="text-align: left;">Have had the vehicle for seven months and have 15,000 miles to date. Fantastic comfort, incredible towing, great capacity . . . the perfect truck for any situation.</td>
 </tr>
 </tbody>
 </table>
@@ -356,12 +360,11 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming features. While it's primarily known as 
-a statistical programming language, it allows functions to be first-class 
-objects, enabling functional programming paradigms such as higher-order 
-functions, anonymous functions, and function composition. However, R is 
-multiparadigm, so you can also use imperative and object-oriented programming 
-styles.</code></pre>
+<pre><code>Yes, R supports functional programming features, such as first-class functions,
+higher-order functions, and the ability to use functions as arguments or return
+values. However, it's primarily a language for statistical computing and data 
+analysis, so it incorporates both procedural and object-oriented programming 
+paradigms as well.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -391,7 +394,7 @@ styles.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Kia has hit the sweet spot for buyers like us with the Kia Nora EX hybrid plug-in.   After our 10 year old Prius died, we began looking for the next step up from a hybrid - all electric or plug-in that would allow my wife to drive 150 miles round trip  dailyto work without having to worry about recharging.  The Kia Niro does that easily combining both electric only of about 27-30 miles before the hybrid has to kick in.  But there's more.  The Kia Niro has a crossover/small SUV look that is more appealing than a sedan/hatchback look. And more -The EX interior is stylish, roomy, with more than enough safety and electronic amenities. And more - great warranties including 5 year/60K  comprehensive and  10 year on the battery.  And - what made it all pencil out are the numerous rebates and/or credits from state of CA, the feds, PG&amp;E and even the local Sonoma Clean Power - all in all reducing the car price by $10,000 and throwing in a free superfast home charging station and a free carpool sticker."</code></pre>
+<pre><code>[1] "This car is a lemon.  Avoid it at all costs.\r At 40k the transmission leaked.  50k miles, head gasket failed.  54k the engine leaked oil again.  57k the valve cover gasket leaked.  \r This car is poorly assembled."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -401,14 +404,14 @@ styles.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "positive"
- $ gpt_Rating     : int 5
- $ reliability    : int 0
- $ utility        : int 1
+ $ sentiment      : chr "negative"
+ $ gpt_Rating     : int 1
+ $ reliability    : int 1
+ $ utility        : int 0
  $ driving        : int 0
  $ comfort        : int 0
- $ interior       : int 1
- $ fuel_efficiency: int 1
+ $ interior       : int 0
+ $ fuel_efficiency: int 0
  $ technology     : int 0</code></pre>
 </div>
 </div>
