@@ -151,11 +151,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link active" href="./llm-assisted-text-analysis.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./llm-assisted-text-analysis.html" aria-current="page"> 
+    <a class="nav-link" href="./llm-assisted-text-analysis.html"> 
 <span class="menu-text">LLM-Assisted Analysis of Open-Ended Text</span></a>
   </li>  
 </ul>
@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">volkswagen</td>
-<td style="text-align: left;">2003 Volkswagen GLX Turbo Coupe (Betty)</td>
-<td style="text-align: left;">We bought this car when a car of ours was stolen. It has been a really fun and reliable form of transportation. We are planning on keeping it in the family, since it has been so reliable. I would recommend this car and would make the same purchase again.</td>
+<td style="text-align: left;">hyundai</td>
+<td style="text-align: left;">Zen Coup Nice....</td>
+<td style="text-align: left;">I have owned this car for 6 months and is by far a fun car to drive. I change the front and back emblems to the wing emblem and looks fantastic. Great Coupe for the $Tony S</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">lexus</td>
-<td style="text-align: left;">Smooth ride</td>
-<td style="text-align: left;">The car drives smooth. Which is how it is designed for. I bought the car for comfort but it has great acceleration especially if you use the sport mode.</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">mazda</td>
-<td style="text-align: left;">Great car, horrible dealership</td>
-<td style="text-align: left;">Car handles absolutely awesome compared to my Lexus SC300. Not powerful at all, but the fun factor makes up for it. It's decently comfortable and roomy inside.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ford</td>
-<td style="text-align: left;">truly american</td>
-<td style="text-align: left;">This car is absolutely a great ride. For the price, you get everything from leather to power. I paid $11000 less for this mustang than my brother did for his G35 Coupe 6MT and the mustang is still faster.</td>
+<td style="text-align: left;">CX-9 all mine</td>
+<td style="text-align: left;">My CX-9 is great. The Grand Touring has plenty of bells and whistles. It rides great. Just enough room for the kids in the back seats. We love the DVD entertainment system. It rides great. I love the look. I'm very pleased with my CX-9.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">honda</td>
-<td style="text-align: left;">Nothing is perfect, but Honda is close.</td>
-<td style="text-align: left;">Owned this vehicle for a year, use it for work pulling a trailer. Fantastic. I think the mileage is reasonable for an AWD truck. I average 16 city/20-21 hwy and about 14-15 when pulling a trailer, and it pulls a trailer sweet. Thanks Honda.</td>
+<td style="text-align: left;">kia</td>
+<td style="text-align: left;">Kia?</td>
+<td style="text-align: left;">I purchased a 1999 Kia in 1999. I have had nothing but trouble with it and would never buy another one. I had a crash at 50mph and the airbags never deployed!</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chrysler</td>
+<td style="text-align: left;">Best &amp; best looking convertible in class</td>
+<td style="text-align: left;">This is the 3rd Chrysler convertible I have purchased (all in a row). They just get better. For the money, the Sebring convertible Limited is the only convertible that has a luxury feel (elegant and sleek, V6 w/ nice handling) and has a real back seat and trunk.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cadillac</td>
+<td style="text-align: left;">DON'T BUY IT!!</td>
+<td style="text-align: left;">Not a reliable car. Resale is horrible. I've been told by the mechanics at the dealership that it's impossible to fix a Catera because it's a foreign car. NOT A GM!</td>
 </tr>
 </tbody>
 </table>
@@ -360,10 +360,12 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming concepts. It allows functions to be 
-treated as first-class objects, enabling higher-order functions and the use of 
-anonymous functions. However, R is primarily a multi-paradigm language, 
-combining object-oriented, procedural, and functional programming styles.</code></pre>
+<pre><code>Yes, R is considered a functional programming language. It supports first-class
+functions, allowing functions to be treated as first-class citizens. You can 
+create, pass, and return functions, which is a key aspect of functional 
+programming. Additionally, R encourages the use of vectorized operations and 
+higher-order functions. However, it also has imperative and object-oriented 
+features.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -393,7 +395,7 @@ combining object-oriented, procedural, and functional programming styles.</code>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "I have a 4 cyl 6 speed tiptronic Turbo Passat SW and love it!  It gets great gas mileage around 35 miles to a gallon, and when it shifts it's so smooth you can't feel it.  American carmakers are now discovering the tiptronic but putting them with 6 cyl cars.  Unless you're towing something you don't need an engine that big."</code></pre>
+<pre><code>[1] "This is absolutely the best car on the planet to own for the long term!  I purchased mine certified for $25K two years ago and I simply love this car.  I actually get about 30 MPG highway cruising about 5MPH over the limit.  No mechanical problems...none.  Took a hit in the rear on a snowy day on I-95 causing $8k of damage, but protected me and my family as advertised and the ABS and vehicle anti-skid worked as promised.  Also, Lexus service has been excellent and not too overly expensive like my last Mercedes 560 SEL.  My family and friends are surprised to learn that I paid less with a better warranty than they did for their new SUVs, and I get much better mileage to boot. Winner!"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -404,14 +406,14 @@ combining object-oriented, procedural, and functional programming styles.</code>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
  $ sentiment      : chr "positive"
- $ gpt_Rating     : int 4
- $ reliability    : int 0
- $ utility        : int 1
- $ driving        : int 1
+ $ gpt_Rating     : int 5
+ $ reliability    : int 1
+ $ utility        : int 0
+ $ driving        : int 0
  $ comfort        : int 0
  $ interior       : int 0
  $ fuel_efficiency: int 1
- $ technology     : int 1</code></pre>
+ $ technology     : int 0</code></pre>
 </div>
 </div>
 <p>The next step would be to loop through the entire corpus, coding each observation one-by-one. However, with over <span class="math inline">\(206,000\)</span> observations and about 2 seconds for each query to the API, this code would take about 5 days to run. For purposes of this demonstration, we’ll use a sample of <span class="math inline">\(7,000\)</span> randomly sampled observations:</p>
