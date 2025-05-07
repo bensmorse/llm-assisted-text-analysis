@@ -151,11 +151,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./llm-assisted-text-analysis.qmd.html"> 
+    <a class="nav-link active" href="./llm-assisted-text-analysis.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./llm-assisted-text-analysis.html" aria-current="page"> 
+    <a class="nav-link" href="./llm-assisted-text-analysis.html"> 
 <span class="menu-text">LLM-Assisted Analysis of Open-Ended Text</span></a>
   </li>  
 </ul>
@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">audi</td>
-<td style="text-align: left;">Accessibility isn't easy</td>
-<td style="text-align: left;">Not one of the easiest cars to get in and out from both sides of the car. Consistently hit my head or the door post. Once in the car it was great. I'm average height. Someone taller or bigger would struggle&gt; It's the main reason I did not get this car</td>
+<td style="text-align: left;">gmc</td>
+<td style="text-align: left;">Love my 2008 GMC</td>
+<td style="text-align: left;">It rides very smooth. I enjoy the comfortable seats. I like all the extras! The wood grain center console and steering wheel are beautiful. I would like more storage available in the center console. I like that the vehicle uses 4 cylinders, until it needs the full 8. It helps with gas mileage.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">honda</td>
-<td style="text-align: left;">I love this car!</td>
-<td style="text-align: left;">I bought this car last year when local gas prices hit $2.50 per gallon and I had to make 200+ mile trip over the mountains 4-6 a month. The only problem I have ever had in the last year is a nail in the tire. I love this car and I love how easy it is to drive and take care of. This car ROCKS!</td>
+<td style="text-align: left;">200 honda odyssey</td>
+<td style="text-align: left;">Paid $21,000 new off the showroom floor in Alaska. Van has 117,000 miles and has had no major problems. Replaced timing belt at 100K but it did not need to be replaced, the old one looked like new. Tried to sell it a few years ago at fair market value but no takers.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">lexus</td>
-<td style="text-align: left;">Love it!</td>
-<td style="text-align: left;">I have had my 2011 Rx 450h for over 2 years and love it. The gas mileage is decent. It is a comfortable ride and so far no problems. Bought it used in 2014. Just had to replace the battery which was bit costly around $240.</td>
+<td style="text-align: left;">chevrolet</td>
+<td style="text-align: left;">A+looks,B-performance,C- quality</td>
+<td style="text-align: left;">have owned for 3 years.the 3.8 liter engine is a dream.not the raciest motor made,but strong and reliable.the interior is low-rent.the front seats are backbreakers on a long trip,the leather is cheap.typical weak GM brakes.handles acceptably,good transporter for daily use.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">mazda</td>
-<td style="text-align: left;">Fun car</td>
-<td style="text-align: left;">Purchased this car less then a month ago and enjoying the heck out of it. Not totally happy with gas mileage but I heard it gets better as the engine breaks in. Got it with auto transmission and it seems to shift well. I'm in my fifties but it's very comfortable even compared to my Volvo.</td>
+<td style="text-align: left;">hyundai</td>
+<td style="text-align: left;">Nice car for the money</td>
+<td style="text-align: left;">I have only had my car a few days but I'm very happy with it. I bought it for the looks, warranty and gas mileage...it is very quiet and handles great. Large trunk but no spare...</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">honda</td>
-<td style="text-align: left;">Excellent except</td>
-<td style="text-align: left;">Great car, I average aprox. 33 mpg combined. On trips it goes up to approx. 38 mpg. Biggest complaint is the gear box, it has a tendency to shift into 3rd rather than overdrive. Otherwise excellent.</td>
+<td style="text-align: left;">bmw</td>
+<td style="text-align: left;">Loaded 330 Ci</td>
+<td style="text-align: left;">First car I bought (all SUV's) and I'm very impressed. Has all the power along with the beauty one can handle. The acceleration and handling are so very impressive.</td>
 </tr>
 </tbody>
 </table>
@@ -360,12 +360,10 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming paradigms. While it is primarily known 
-as a statistical programming language, it allows for the use of functions as 
-first-class citizens, enabling techniques like higher-order functions, 
-closures, and anonymous functions. This makes it suitable for functional 
-programming, albeit it also supports imperative and object-oriented programming
-styles.</code></pre>
+<pre><code>Yes, R supports functional programming concepts. It allows functions to be 
+treated as first-class citizens, enabling higher-order functions and closures. 
+However, R is primarily a multi-paradigm language, combining elements of 
+procedural and object-oriented programming as well.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -395,7 +393,7 @@ styles.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Love this car and so far everything is surprisingly great! Was skeptical about the Hyundai brand but after checking the JD Powers rankings and other research and the test drive I was sold. Was also comparing the Rav 4 from Toyota and the Honda CRV, cant beat the warranty and I do believe Hyundai reliability and quality have surpassed both. Averaging about 27 mpg in mixed driving and still breaking in the engine. European flair is excellent on both the inside and out and the feel of the ride. I plan on keeping this one in the family for a long time!!!!!"</code></pre>
+<pre><code>[1] "horrible whining noise but intermittent so dealer always says they can't duplicate, transmission slams into drive but intermittent, dealer fixed once but still does it, can't duplicate when they have the car so they wont do anything about it. Car shakes terribly but dealer says its a convertible and you can expect cowl shake. Better than a vibrator. Had the car a little over 5 years and I'd be ashamed to sell it to anyone other than another Chrysler dealership so they would have the problem. Probably cured me from buying another Chrysler product and Ive always been a Chrysler person.Been trying off and on for 3 years to get the whining fixed with no luck at all. Number one piece of JUNK"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -405,14 +403,14 @@ styles.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "positive"
- $ gpt_Rating     : int 5
+ $ sentiment      : chr "negative"
+ $ gpt_Rating     : int 1
  $ reliability    : int 1
  $ utility        : int 0
  $ driving        : int 1
  $ comfort        : int 0
- $ interior       : int 1
- $ fuel_efficiency: int 1
+ $ interior       : int 0
+ $ fuel_efficiency: int 0
  $ technology     : int 0</code></pre>
 </div>
 </div>
