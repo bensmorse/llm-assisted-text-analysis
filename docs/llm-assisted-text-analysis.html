@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">buick</td>
-<td style="text-align: left;">Air conditioning</td>
-<td style="text-align: left;">The air conditioning just went on me. It actually works but it will not blow out of the top vents. It blows out of the bottom and through the defrost areas. Was told by a dealer that it'll cost me over $3000 to repair it because of where the vent is located. Has anyone else had this problem?</td>
+<td style="text-align: left;">ford</td>
+<td style="text-align: left;">Fun to drive</td>
+<td style="text-align: left;">I have been very happy with the drivability and gas economy. I'm having a great time driving this car and it makes my trips to work enjoyable. I'm comfortable in the car and feel very safe.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">honda</td>
+<td style="text-align: left;">What happened to Honda reliability?</td>
+<td style="text-align: left;">Please do research on the valve/cylinder head failures that plague the 1997-2001 CRV. Mine burned a valve at 123k miles. This is a prevalent issue that will literally cost thousands of dollars to replace. If I would have known this I would have never bought this truck.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">toyota</td>
+<td style="text-align: left;">Great car</td>
+<td style="text-align: left;">Solid and reliable car. Comfort is exceptional. Just returned from vacation, driving 18 hours straight with 5 people. Rear seat comfort is as good as front. Averaged 30 mpg.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mazda</td>
-<td style="text-align: left;">Great second car</td>
-<td style="text-align: left;">I've loved this car for almost 10 years, but hated also at times when I couldn't even fit my carry on bag in the trunk. Overall very reliable and good miles per gallon.</td>
+<td style="text-align: left;">WOW! This is fun to drive!</td>
+<td style="text-align: left;">This is fun to drive. I'm not sure I would be comfortable driving on a long road trip but the vehicle is fun driving around town. I find myself accelerating into turns and braking hard. The performance is unbelievable. This is a homerun and the price is reasonable.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">lincoln</td>
-<td style="text-align: left;">Aviator</td>
-<td style="text-align: left;">The convenience of a luxury SUV with the performance of a Cobra. Lots of style and comfort. Enjoyable to drive on long trips with the climate controlled seats and power adjustments.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">dodge</td>
-<td style="text-align: left;">love my dakota</td>
-<td style="text-align: left;">This truck has preformed great from the day I drove it off the lot. Have not had one bit of trouble. I do not have the limit -slip rear end, I know people who do and they have lots of trouble with there Dakota.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">porsche</td>
-<td style="text-align: left;">Fun to Drive</td>
-<td style="text-align: left;">There is nothing better for a car lover than red, lots of power, no top and no back seat. I can't help but smile when driving this car. This was worth every cent.</td>
+<td style="text-align: left;">chrysler</td>
+<td style="text-align: left;">2000 Voyager</td>
+<td style="text-align: left;">The 2000 Voyager has proven to be very reliable. The ability to remove both back benches has been very handy when moving or purchasing odd shaped items. Special slots on the back bench keeps grocery bags (plastic) from falling over. Almost 5 years later and I am still pleased with my purchase.</td>
 </tr>
 </tbody>
 </table>
@@ -360,10 +360,11 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R is considered a functional programming language, although it also 
-supports other paradigms like procedural and object-oriented programming. In R,
-functions are first-class objects, meaning they can be passed as arguments, 
-returned from other functions, and assigned to variables.</code></pre>
+<pre><code>Yes, R supports functional programming paradigms. It allows functions to be 
+treated as first-class citizens, enabling you to pass them as arguments, return
+them from other functions, and assign them to variables. However, R is 
+multi-paradigm, meaning it also supports procedural and object-oriented 
+programming.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -393,7 +394,7 @@ returned from other functions, and assigned to variables.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "I bought this car in Nov of 2004 with about 42K miles.  I come to find out that I am the third owner! At approx 60K miles, the transmission went bad and it will require $3200 in repairs.  Thank God I bought an extended warranty. Another complaint I have is headroom-- there is none.  I'm constantly banging my head against the ceiling when I check my mirrors to go in reverse (and I'm only 5-9).  The stereo is pretty cool but it had to be replaced by Honda (they did it for free) because the whole display went black one day.  So far, this car has been high maintainence but it is a fun ride.  I'm hoping I won't continue to have problems with it.  My '95 Accord lasted 185K miles."</code></pre>
+<pre><code>[1] "It's only been two months for us, but aside from the dismal gas mileage, this vehicle has been all we hoped it would be. There is an annoying click, or, slight hitch in the driver and passenger power windows as they go down. Not sure if that is common to other Armada's. A bi-fold thrid row seat would be prefferable to the current 'all-up' or 'all-down.' It would just give you more seating and cargo options. If I had to guess, I'd bet that Nissan corrects this for future models. But its eye-catching good looks and thoughful features like a power liftgate, rear sonar, mud lights, and fold-flat 2nd &amp; 3rd row seats have made it very nice. Oh, did I mention the power? Wow..."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -403,14 +404,14 @@ returned from other functions, and assigned to variables.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "neutral"
- $ gpt_Rating     : num 3
- $ reliability    : int 1
- $ utility        : int 0
+ $ sentiment      : chr "positive"
+ $ gpt_Rating     : int 4
+ $ reliability    : int 0
+ $ utility        : int 1
  $ driving        : int 1
  $ comfort        : int 0
  $ interior       : int 1
- $ fuel_efficiency: int 0
+ $ fuel_efficiency: int 1
  $ technology     : int 1</code></pre>
 </div>
 </div>
