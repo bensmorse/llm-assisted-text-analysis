@@ -151,7 +151,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="./llm-assisted-text-analysis.qmd.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -180,7 +180,7 @@ window.Quarto = {
   <li><a href="#descriptives" id="toc-descriptives" class="nav-link" data-scroll-target="#descriptives">Descriptives</a></li>
   </ul></li>
   <li><a href="#llm-assisted-classification" id="toc-llm-assisted-classification" class="nav-link" data-scroll-target="#llm-assisted-classification">LLM-Assisted Classification</a></li>
-  <li><a href="#accuracy-of-llm-assisted-coding" id="toc-accuracy-of-llm-assisted-coding" class="nav-link" data-scroll-target="#accuracy-of-llm-assisted-coding">Accuracy of LLM-Assisted Coding</a></li>
+  <li><a href="#accuracy-of-llm-assisted-classification" id="toc-accuracy-of-llm-assisted-classification" class="nav-link" data-scroll-target="#accuracy-of-llm-assisted-classification">Accuracy of LLM-Assisted Classification</a></li>
   <li><a href="#disaggregation-by-automaker-country-region" id="toc-disaggregation-by-automaker-country-region" class="nav-link" data-scroll-target="#disaggregation-by-automaker-country-region">Disaggregation by Automaker Country / Region</a></li>
   </ul>
 </nav>
@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">mini</td>
-<td style="text-align: left;">New Owner</td>
-<td style="text-align: left;">I drove it for two days in the West Virginia mountains using the paddel shifter. It was a blast. The only change I would make is an electric adjustable drivers seat. It is a great car, but it is not as much fun as my 1990 British Open Mini. Everyone should have one.</td>
+<td style="text-align: left;">audi</td>
+<td style="text-align: left;">Accessibility isn't easy</td>
+<td style="text-align: left;">Not one of the easiest cars to get in and out from both sides of the car. Consistently hit my head or the door post. Once in the car it was great. I'm average height. Someone taller or bigger would struggle&gt; It's the main reason I did not get this car</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">chevrolet</td>
-<td style="text-align: left;">Big Truck Like a Rock</td>
-<td style="text-align: left;">Solid truck with lots of power. This baby is great and I look good in it. I fly F16's for a living and drive Chevy's when not airborne. The Duramax is unbelievable, tows the trailer like it isnt there. Go buy one.</td>
+<td style="text-align: left;">honda</td>
+<td style="text-align: left;">I love this car!</td>
+<td style="text-align: left;">I bought this car last year when local gas prices hit $2.50 per gallon and I had to make 200+ mile trip over the mountains 4-6 a month. The only problem I have ever had in the last year is a nail in the tire. I love this car and I love how easy it is to drive and take care of. This car ROCKS!</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">buick</td>
-<td style="text-align: left;">Maintain your Buick !!!</td>
-<td style="text-align: left;">My 2004 Buick has 168000 miles on it. I've replace the right front hup, put two sensors on it and it will pass inspection tomorrow. Flush the transmission at 100,000 miles keep the oil changed sooner than the book says, keep the tires in check. Best driving, riding SUV I've ever drove.</td>
+<td style="text-align: left;">lexus</td>
+<td style="text-align: left;">Love it!</td>
+<td style="text-align: left;">I have had my 2011 Rx 450h for over 2 years and love it. The gas mileage is decent. It is a comfortable ride and so far no problems. Bought it used in 2014. Just had to replace the battery which was bit costly around $240.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">kia</td>
-<td style="text-align: left;">What a Mistake</td>
-<td style="text-align: left;">I like that way this car handles and that is what sold me. The repair problems have made me decide to get rid of this car after having had it only 10 months. It seems like it's hard to keep ahead of it falling apart. I have never had the misfortune to have ever gotten a car like this before.</td>
+<td style="text-align: left;">mazda</td>
+<td style="text-align: left;">Fun car</td>
+<td style="text-align: left;">Purchased this car less then a month ago and enjoying the heck out of it. Not totally happy with gas mileage but I heard it gets better as the engine breaks in. Got it with auto transmission and it seems to shift well. I'm in my fifties but it's very comfortable even compared to my Volvo.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">chevrolet</td>
-<td style="text-align: left;">2009 beige cobalt</td>
-<td style="text-align: left;">Fun to drive, 30000 miles, mechanical problems, turn signal wouldn't shut off, now "something " is draining the battery, in shop for diagnosis. could not locate fob for above mentioned car</td>
+<td style="text-align: left;">honda</td>
+<td style="text-align: left;">Excellent except</td>
+<td style="text-align: left;">Great car, I average aprox. 33 mpg combined. On trips it goes up to approx. 38 mpg. Biggest complaint is the gear box, it has a tendency to shift into 3rd rather than overdrive. Otherwise excellent.</td>
 </tr>
 </tbody>
 </table>
@@ -360,10 +360,12 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming paradigms, allowing functions to be 
-first-class citizens. You can create, pass, and return functions, and it 
-includes features like higher-order functions and closures. However, it also 
-supports object-oriented and procedural programming styles.</code></pre>
+<pre><code>Yes, R supports functional programming paradigms. While it is primarily known 
+as a statistical programming language, it allows for the use of functions as 
+first-class citizens, enabling techniques like higher-order functions, 
+closures, and anonymous functions. This makes it suitable for functional 
+programming, albeit it also supports imperative and object-oriented programming
+styles.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -393,7 +395,7 @@ supports object-oriented and procedural programming styles.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "I bought the car in 2002 with 82,000 \rmiles on it. It now has 122,000 miles \rand is still tight and reliable. Other \rthan brakes, tires, and oil changes \rthis car has been nearly trouble free. \rI did have to replace the driver's side \relectric window motor."</code></pre>
+<pre><code>[1] "Love this car and so far everything is surprisingly great! Was skeptical about the Hyundai brand but after checking the JD Powers rankings and other research and the test drive I was sold. Was also comparing the Rav 4 from Toyota and the Honda CRV, cant beat the warranty and I do believe Hyundai reliability and quality have surpassed both. Averaging about 27 mpg in mixed driving and still breaking in the engine. European flair is excellent on both the inside and out and the feel of the ride. I plan on keeping this one in the family for a long time!!!!!"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -404,13 +406,13 @@ supports object-oriented and procedural programming styles.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
  $ sentiment      : chr "positive"
- $ gpt_Rating     : num 4.5
+ $ gpt_Rating     : int 5
  $ reliability    : int 1
  $ utility        : int 0
- $ driving        : int 0
+ $ driving        : int 1
  $ comfort        : int 0
- $ interior       : int 0
- $ fuel_efficiency: int 0
+ $ interior       : int 1
+ $ fuel_efficiency: int 1
  $ technology     : int 0</code></pre>
 </div>
 </div>
@@ -504,8 +506,8 @@ The dominance of positive reviews is perhaps a little surprising, since behavior
 </div>
 <p>For negative reviews, by far the most frequent complaint relates to reliability. To a lesser degree, unsatisfied customers complain about faulty technology, or unpleasant driving characteristics. Surprisingly, they don’t seem to complain too much about poor fuel economy. For positive reviews, satisfied customers most commonly praise the vehicle’s driving characteristics, followed by comfort and reliability. References to technology have increased overtime, but remain subordinate through 2018, the latest year for which data are available.</p>
 </section>
-<section id="accuracy-of-llm-assisted-coding" class="level2">
-<h2 class="anchored" data-anchor-id="accuracy-of-llm-assisted-coding">Accuracy of LLM-Assisted Coding</h2>
+<section id="accuracy-of-llm-assisted-classification" class="level2">
+<h2 class="anchored" data-anchor-id="accuracy-of-llm-assisted-classification">Accuracy of LLM-Assisted Classification</h2>
 <p>We’ve coded the data and summarized the results, but how confident should we be in the accuracy of GPT’s coding? In a real-world application, the best way to verify the accuracy of LLM-coded data would be to compare LLM-generated codings to a small, randomly-selected test set of human-coded reviews.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> But since this is just a demonstration, we won’t go through the process human-coding. Instead, as prime-facie validity test, we can take advantage of the fact that reviewers provided a 1 to 5 satisfaction rating alongside their review, which we can compare to GPT’s predicted customer satisfaction based on its reading of the review.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> (This test is actually a little unfair to GPT, since customers’ overall ratings may have differed from the focus or topic of their review.)</p>
 <p>The root mean-squared error (RMSE)<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> for the GPT-generated ratings is 1.1, which suggests that on average, GPT’s rating was within 1.1 points (‘stars’) of the customer’s rating.</p>
 <div class="cell">

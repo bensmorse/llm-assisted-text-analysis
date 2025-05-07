@@ -1,7 +1,3 @@
 ---
-title: "llm-assisted-text-analysis"
+output-file: llm-assisted-text-analysis.qmd
 ---
-
-In progress.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
