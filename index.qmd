@@ -1,7 +1,0 @@
----
-title: "llm-assisted-text-analysis"
----
-
-In progress.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
