@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">volvo</td>
-<td style="text-align: left;">Good Solid Car</td>
-<td style="text-align: left;">This is our third Volvo. The other two were station wagons (over 15 years ago). Purchased this for my 17 year old daughter as her first car. I am impressed because it is sporty enough for her and it is still a solid little Volvo. I just wish I could drive it sometime.</td>
+<td style="text-align: left;">hyundai</td>
+<td style="text-align: left;">Sonata is a great car</td>
+<td style="text-align: left;">I had an Excel before which was great, but the quality and value of the Sonata is outstanding. I use it for short commutes and long trips with the family and it does the job really well. I have had one problem with the power windows which was fixed under warrantee.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">chevrolet</td>
-<td style="text-align: left;">hated it</td>
-<td style="text-align: left;">for me - strickly a younger persons truck - engine and transmission were loud - off road tires areloud and throws slush/mud/water up onto itself - making it impossible to keep clean especially in winter</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">toyota</td>
-<td style="text-align: left;">Quiet ride with great MPG</td>
-<td style="text-align: left;">This car has a great and quiet ride. I am averaging about 38 MPG city/highway driving. I got 43.8 MPG on one recent interstate trip! Interior is roomy. Only complaint is poor acceleration from take-off.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">kia</td>
-<td style="text-align: left;">Got it today</td>
-<td style="text-align: left;">Picked up my new Sedona today and couldn't be happier. After reading all the reviews in here, decided to take the plunge. Got a super deal on a super Minivan..woohoo!!! I can't believe all the goodies these vans are equipped with! I would recommend this vehicle to everyone!!!</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">honda</td>
-<td style="text-align: left;">Honda Lude Review</td>
-<td style="text-align: left;">This is an excellent car and a shame Honda stopped production of the Prelude. A great used car and fortuneately for prospective buyers, good deals are out there for low- mileage Preludes.</td>
+<td style="text-align: left;">Wouldn’t buy another ever</td>
+<td style="text-align: left;">Great for fuel mileage and traction. Not comfortable to sit in for any period of time, no room for teenage kids. Cruise control is “wonky”, dealership charges an arm and a leg for maintenance.! Warranties/extra packages depreciate fast! Overall 2!</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">subaru</td>
+<td style="text-align: left;">AWD supercar!</td>
+<td style="text-align: left;">This car is awesome. The handling and acceleration blows cars away at 2-3 times the price. The build quality is great and I love the way it looks. I really enjoy driving this car!</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mercury</td>
+<td style="text-align: left;">Love IT!!!</td>
+<td style="text-align: left;">Just purchased today and I am thrilled. I was hesitant on buying American especially going from a VW to a Mercury but I love it. Very quick, full of pep and its an head turner.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dodge</td>
+<td style="text-align: left;">Looks are deceiving!</td>
+<td style="text-align: left;">My '99 Intrepid ran great, looks great and is great, unless you have to diagnose a malfunction with it. One problem consist of 4 or 5 smaller problems together and will cost you an arm and a leg to fix correctly.</td>
 </tr>
 </tbody>
 </table>
@@ -360,10 +360,11 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming paradigms. You can use functions as 
-first-class objects, create higher-order functions, and employ functions like 
-`lapply`, `sapply`, and others for functional programming tasks. However, R is 
-multi-paradigm and also supports imperative and object-oriented programming.</code></pre>
+<pre><code>Yes, R supports functional programming paradigms, allowing you to treat 
+functions as first-class objects, use higher-order functions, and apply 
+functions to data. However, it also supports imperative and object-oriented 
+programming styles. So, while it has strong functional programming features, it
+is not purely a functional programming language.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -393,7 +394,7 @@ multi-paradigm and also supports imperative and object-oriented programming.</co
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Great car. Front end shake at 65-70mph \rI understand is a common complaint \rthese days. Design flaw in wheels. Snow \rgets packed in them and causes the \rwhole car to go out of balance and \rshake. Other than these relatively \rminor flaws, fast, fun, comfortable and \rthe looks you get..Great Car."</code></pre>
+<pre><code>[1] "I have only has the car a short time, but I am overall impressed. Good features for a compact car. I traded in a 2004 Acura TL because of financial reasons, and don't feel like I have given up a lot. I got the NAVI and Bose.  I would like to be able to play MP3 CDs, but got the cassette deck to use an adapter for my iPod.  Works fine. Much better utility than the TL.  My complaints are lack of dead pedal, mats are lousy, and the brake and accelerator are a bit too close.  I find the left side of my right foot hitting the brake when I put my foot on the gas or take it off.  My TL had great cupholders (seems silly, but used every day, right?), but these are good too."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -403,15 +404,15 @@ multi-paradigm and also supports imperative and object-oriented programming.</co
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "neutral"
+ $ sentiment      : chr "positive"
  $ gpt_Rating     : int 4
  $ reliability    : int 0
  $ utility        : int 1
- $ driving        : int 1
- $ comfort        : int 1
- $ interior       : int 0
+ $ driving        : int 0
+ $ comfort        : int 0
+ $ interior       : int 1
  $ fuel_efficiency: int 0
- $ technology     : int 0</code></pre>
+ $ technology     : int 1</code></pre>
 </div>
 </div>
 <p>The next step would be to loop through the entire corpus, coding each observation one-by-one. However, with over <span class="math inline">\(206,000\)</span> observations and about 2 seconds for each query to the API, this code would take about 5 days to run. For purposes of this demonstration, we’ll use a sample of <span class="math inline">\(7,000\)</span> randomly sampled observations:</p>
