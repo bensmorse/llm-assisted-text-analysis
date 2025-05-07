@@ -151,11 +151,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./llm-assisted-text-analysis.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./llm-assisted-text-analysis.html"> 
+    <a class="nav-link active" href="./llm-assisted-text-analysis.html" aria-current="page"> 
 <span class="menu-text">LLM-Assisted Analysis of Open-Ended Text</span></a>
   </li>  
 </ul>
@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">gmc</td>
-<td style="text-align: left;">Love my 2008 GMC</td>
-<td style="text-align: left;">It rides very smooth. I enjoy the comfortable seats. I like all the extras! The wood grain center console and steering wheel are beautiful. I would like more storage available in the center console. I like that the vehicle uses 4 cylinders, until it needs the full 8. It helps with gas mileage.</td>
+<td style="text-align: left;">volvo</td>
+<td style="text-align: left;">Good Solid Car</td>
+<td style="text-align: left;">This is our third Volvo. The other two were station wagons (over 15 years ago). Purchased this for my 17 year old daughter as her first car. I am impressed because it is sporty enough for her and it is still a solid little Volvo. I just wish I could drive it sometime.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">honda</td>
-<td style="text-align: left;">200 honda odyssey</td>
-<td style="text-align: left;">Paid $21,000 new off the showroom floor in Alaska. Van has 117,000 miles and has had no major problems. Replaced timing belt at 100K but it did not need to be replaced, the old one looked like new. Tried to sell it a few years ago at fair market value but no takers.</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">chevrolet</td>
-<td style="text-align: left;">A+looks,B-performance,C- quality</td>
-<td style="text-align: left;">have owned for 3 years.the 3.8 liter engine is a dream.not the raciest motor made,but strong and reliable.the interior is low-rent.the front seats are backbreakers on a long trip,the leather is cheap.typical weak GM brakes.handles acceptably,good transporter for daily use.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">hyundai</td>
-<td style="text-align: left;">Nice car for the money</td>
-<td style="text-align: left;">I have only had my car a few days but I'm very happy with it. I bought it for the looks, warranty and gas mileage...it is very quiet and handles great. Large trunk but no spare...</td>
+<td style="text-align: left;">hated it</td>
+<td style="text-align: left;">for me - strickly a younger persons truck - engine and transmission were loud - off road tires areloud and throws slush/mud/water up onto itself - making it impossible to keep clean especially in winter</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">bmw</td>
-<td style="text-align: left;">Loaded 330 Ci</td>
-<td style="text-align: left;">First car I bought (all SUV's) and I'm very impressed. Has all the power along with the beauty one can handle. The acceleration and handling are so very impressive.</td>
+<td style="text-align: left;">toyota</td>
+<td style="text-align: left;">Quiet ride with great MPG</td>
+<td style="text-align: left;">This car has a great and quiet ride. I am averaging about 38 MPG city/highway driving. I got 43.8 MPG on one recent interstate trip! Interior is roomy. Only complaint is poor acceleration from take-off.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">kia</td>
+<td style="text-align: left;">Got it today</td>
+<td style="text-align: left;">Picked up my new Sedona today and couldn't be happier. After reading all the reviews in here, decided to take the plunge. Got a super deal on a super Minivan..woohoo!!! I can't believe all the goodies these vans are equipped with! I would recommend this vehicle to everyone!!!</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">honda</td>
+<td style="text-align: left;">Honda Lude Review</td>
+<td style="text-align: left;">This is an excellent car and a shame Honda stopped production of the Prelude. A great used car and fortuneately for prospective buyers, good deals are out there for low- mileage Preludes.</td>
 </tr>
 </tbody>
 </table>
@@ -360,10 +360,10 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming concepts. It allows functions to be 
-treated as first-class citizens, enabling higher-order functions and closures. 
-However, R is primarily a multi-paradigm language, combining elements of 
-procedural and object-oriented programming as well.</code></pre>
+<pre><code>Yes, R supports functional programming paradigms. You can use functions as 
+first-class objects, create higher-order functions, and employ functions like 
+`lapply`, `sapply`, and others for functional programming tasks. However, R is 
+multi-paradigm and also supports imperative and object-oriented programming.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -393,7 +393,7 @@ procedural and object-oriented programming as well.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "horrible whining noise but intermittent so dealer always says they can't duplicate, transmission slams into drive but intermittent, dealer fixed once but still does it, can't duplicate when they have the car so they wont do anything about it. Car shakes terribly but dealer says its a convertible and you can expect cowl shake. Better than a vibrator. Had the car a little over 5 years and I'd be ashamed to sell it to anyone other than another Chrysler dealership so they would have the problem. Probably cured me from buying another Chrysler product and Ive always been a Chrysler person.Been trying off and on for 3 years to get the whining fixed with no luck at all. Number one piece of JUNK"</code></pre>
+<pre><code>[1] "Great car. Front end shake at 65-70mph \rI understand is a common complaint \rthese days. Design flaw in wheels. Snow \rgets packed in them and causes the \rwhole car to go out of balance and \rshake. Other than these relatively \rminor flaws, fast, fun, comfortable and \rthe looks you get..Great Car."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -403,12 +403,12 @@ procedural and object-oriented programming as well.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "negative"
- $ gpt_Rating     : int 1
- $ reliability    : int 1
- $ utility        : int 0
+ $ sentiment      : chr "neutral"
+ $ gpt_Rating     : int 4
+ $ reliability    : int 0
+ $ utility        : int 1
  $ driving        : int 1
- $ comfort        : int 0
+ $ comfort        : int 1
  $ interior       : int 0
  $ fuel_efficiency: int 0
  $ technology     : int 0</code></pre>
