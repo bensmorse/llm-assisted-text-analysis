@@ -151,11 +151,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link active" href="./llm-assisted-text-analysis.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./llm-assisted-text-analysis.html" aria-current="page"> 
+    <a class="nav-link" href="./llm-assisted-text-analysis.html"> 
 <span class="menu-text">LLM-Assisted Analysis of Open-Ended Text</span></a>
   </li>  
 </ul>
@@ -312,29 +312,29 @@ $ country       &lt;chr&gt; "American", "American", "American", "American", "Ame
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">hyundai</td>
-<td style="text-align: left;">Sonata is a great car</td>
-<td style="text-align: left;">I had an Excel before which was great, but the quality and value of the Sonata is outstanding. I use it for short commutes and long trips with the family and it does the job really well. I have had one problem with the power windows which was fixed under warrantee.</td>
+<td style="text-align: left;">buick</td>
+<td style="text-align: left;">Air conditioning</td>
+<td style="text-align: left;">The air conditioning just went on me. It actually works but it will not blow out of the top vents. It blows out of the bottom and through the defrost areas. Was told by a dealer that it'll cost me over $3000 to repair it because of where the vent is located. Has anyone else had this problem?</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">honda</td>
-<td style="text-align: left;">Wouldn’t buy another ever</td>
-<td style="text-align: left;">Great for fuel mileage and traction. Not comfortable to sit in for any period of time, no room for teenage kids. Cruise control is “wonky”, dealership charges an arm and a leg for maintenance.! Warranties/extra packages depreciate fast! Overall 2!</td>
+<td style="text-align: left;">mazda</td>
+<td style="text-align: left;">Great second car</td>
+<td style="text-align: left;">I've loved this car for almost 10 years, but hated also at times when I couldn't even fit my carry on bag in the trunk. Overall very reliable and good miles per gallon.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">subaru</td>
-<td style="text-align: left;">AWD supercar!</td>
-<td style="text-align: left;">This car is awesome. The handling and acceleration blows cars away at 2-3 times the price. The build quality is great and I love the way it looks. I really enjoy driving this car!</td>
+<td style="text-align: left;">lincoln</td>
+<td style="text-align: left;">Aviator</td>
+<td style="text-align: left;">The convenience of a luxury SUV with the performance of a Cobra. Lots of style and comfort. Enjoyable to drive on long trips with the climate controlled seats and power adjustments.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">mercury</td>
-<td style="text-align: left;">Love IT!!!</td>
-<td style="text-align: left;">Just purchased today and I am thrilled. I was hesitant on buying American especially going from a VW to a Mercury but I love it. Very quick, full of pep and its an head turner.</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">dodge</td>
-<td style="text-align: left;">Looks are deceiving!</td>
-<td style="text-align: left;">My '99 Intrepid ran great, looks great and is great, unless you have to diagnose a malfunction with it. One problem consist of 4 or 5 smaller problems together and will cost you an arm and a leg to fix correctly.</td>
+<td style="text-align: left;">love my dakota</td>
+<td style="text-align: left;">This truck has preformed great from the day I drove it off the lot. Have not had one bit of trouble. I do not have the limit -slip rear end, I know people who do and they have lots of trouble with there Dakota.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">porsche</td>
+<td style="text-align: left;">Fun to Drive</td>
+<td style="text-align: left;">There is nothing better for a car lover than red, lots of power, no top and no back seat. I can't help but smile when driving this car. This was worth every cent.</td>
 </tr>
 </tbody>
 </table>
@@ -360,11 +360,10 @@ Note: for first time, need to add your open_api_ai key as an environmental varia
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm chat is connected to API</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Is R a functional programming language?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, R supports functional programming paradigms, allowing you to treat 
-functions as first-class objects, use higher-order functions, and apply 
-functions to data. However, it also supports imperative and object-oriented 
-programming styles. So, while it has strong functional programming features, it
-is not purely a functional programming language.</code></pre>
+<pre><code>Yes, R is considered a functional programming language, although it also 
+supports other paradigms like procedural and object-oriented programming. In R,
+functions are first-class objects, meaning they can be passed as arguments, 
+returned from other functions, and assigned to variables.</code></pre>
 </div>
 </div>
 <p>Define the prompts that will be used to code the data:</p>
@@ -394,7 +393,7 @@ is not purely a functional programming language.</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "I have only has the car a short time, but I am overall impressed. Good features for a compact car. I traded in a 2004 Acura TL because of financial reasons, and don't feel like I have given up a lot. I got the NAVI and Bose.  I would like to be able to play MP3 CDs, but got the cassette deck to use an adapter for my iPod.  Works fine. Much better utility than the TL.  My complaints are lack of dead pedal, mats are lousy, and the brake and accelerator are a bit too close.  I find the left side of my right foot hitting the brake when I put my foot on the gas or take it off.  My TL had great cupholders (seems silly, but used every day, right?), but these are good too."</code></pre>
+<pre><code>[1] "I bought this car in Nov of 2004 with about 42K miles.  I come to find out that I am the third owner! At approx 60K miles, the transmission went bad and it will require $3200 in repairs.  Thank God I bought an extended warranty. Another complaint I have is headroom-- there is none.  I'm constantly banging my head against the ceiling when I check my mirrors to go in reverse (and I'm only 5-9).  The stereo is pretty cool but it had to be replaced by Honda (they did it for free) because the whole display went black one day.  So far, this car has been high maintainence but it is a fun ride.  I'm hoping I won't continue to have problems with it.  My '95 Accord lasted 185K miles."</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -404,11 +403,11 @@ is not purely a functional programming language.</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coded.review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ sentiment      : chr "positive"
- $ gpt_Rating     : int 4
- $ reliability    : int 0
- $ utility        : int 1
- $ driving        : int 0
+ $ sentiment      : chr "neutral"
+ $ gpt_Rating     : num 3
+ $ reliability    : int 1
+ $ utility        : int 0
+ $ driving        : int 1
  $ comfort        : int 0
  $ interior       : int 1
  $ fuel_efficiency: int 0
