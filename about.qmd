@@ -1,3 +1,5 @@
 ---
-output-file: llm-assisted-text-analysis.html
+title: "LLM-Assisted Text Analysis"
 ---
+
+To view the LLM-Assisted Text Analysis demo, click [here](https://bensmorse.github.io/llm-assisted-text-analysis/llm-assisted-text-analysis.html). 
