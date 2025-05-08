@@ -1,5 +1,3 @@
 ---
-title: "About"
+output-file: llm-assisted-text-analysis.html
 ---
-
-About this site
