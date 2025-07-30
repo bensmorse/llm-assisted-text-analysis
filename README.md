@@ -1,0 +1,1 @@
+Demonstration of AI-assisted text analysis using the `ellmer` package in R. See [https://bensmorse.github.io/llm-assisted-text-analysis](https://bensmorse.github.io/llm-assisted-text-analysis) for full demo.
